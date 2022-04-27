@@ -1,6 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//数组名是什么？
+int main()
+{
+	int arr[] = { 0,1,2,3,4,5,6,7,8,9 };
+	printf("%p\n",arr);
+    printf("%p\n",&arr[0]); //以上两个打印相同
+    printf("%d\n",*arr); //0
+
+	return 0;
+}
+
+
+
+
 //数组应用：冒泡排序，比较相邻两个元素的大小，交换。
 void bubble_sort(int arr[], int sz)
 {
@@ -13,14 +27,15 @@ void bubble_sort(int arr[], int sz)
 		int flag = 1;// 假设这一趟要排序的数据已经有序
 		// 每一趟冒泡排序
 		int j = 0;
-    		for (j = 0; j < sz-1-i; j++)
+    	for (j = 0; j < sz-1-i; j++)
 		{
 			if(arr[j] > arr[j + 1])
 			{
 				int tmp = arr[j];
 				arr[j] = arr[j + 1];
 				arr[j + 1] = tmp;
-			flag = 0;// 本趟排序的数据其实不完全有序
+
+			    flag = 0;// 本趟排序的数据其实不完全有序
 			}
 		}
 		if (flag == 1)
@@ -43,9 +58,6 @@ int main()
 	}
 	return 0;
 }
-
-
-
 
 
 
