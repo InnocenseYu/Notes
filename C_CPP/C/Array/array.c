@@ -9,6 +9,9 @@ int main()
     printf("%p\n",&arr[0]); //以上两个打印相同
     printf("%d\n",*arr); //0
 
+    char* p = "hello bit.";
+    printf( "%s\n", p);
+
 	return 0;
 }
 
