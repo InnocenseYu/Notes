@@ -9,6 +9,9 @@ void test()
     
 }
 
+//void test(); //因为头文件未包含，直接这样使用的无效；
+extern void test();  //当头文件未包含test()函数时，可以使用 extern 关键字引用使用，但 仅仅作用于函数的调用，与调用函数的内部参数无关系
+
 int main()
 {
     int i = 0;

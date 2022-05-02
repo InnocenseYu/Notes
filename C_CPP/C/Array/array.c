@@ -16,8 +16,6 @@ int main()
 }
 
 
-
-
 //数组应用：冒泡排序，比较相邻两个元素的大小，交换。
 void bubble_sort(int arr[], int sz)
 {

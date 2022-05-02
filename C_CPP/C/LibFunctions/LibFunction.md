@@ -18,6 +18,8 @@
 - 当name char型(1B)数组,使用""包裹3个字符时，所占空间大小为4*1=4，包括所有未显示的部分末尾处'\0'；
 - 区分指针操作中数组名即为首元素的地址，arr等于&arr[0];
 - sizeof(arr)不等于sizeof(&arr[0])，这里arr指的是数组的全部存储区空间，&arr[0]指的是arr数组首元素在存储空间的位置
+- 类型大小就是该类型创建变量的大小
+  - 如char* a; short* a; double* a; 创建的变量 a 是不同类型的指针变量，存放地址，32位平台，sizeof(char*) = sizeof(short*) = sizeof(double*) = 4byte；64位系统大小为8byte
 
 
 ### strlen(name)

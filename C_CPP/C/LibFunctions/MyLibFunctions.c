@@ -43,6 +43,7 @@ int my_strlen(const char* str)
 
 
 char* strcpy(char* destination, const char* source)
+// strcpy 系统库函数，需包含 #include <string.h>
 //字符串拷贝
 //原代码
 // void my_strcpy(char* dest, char* src)
