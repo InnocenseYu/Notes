@@ -40,6 +40,22 @@
 | 10 | \n |
 
 ### 打印控制字符
+- 用于浮点数的格式说明符的一般形式是：
+
+%[width][.precision][modifier]f
+
+- 其中，方括号不包含在格式说明符中。
+- 它们包含的内容是可选的，所以可省略 width、.precision 或 modifier，或它们的任意组合。
+- width 值是一个整数，指定输出的总字符数 (包括空格)，即字段宽度。
+- precision 值也是一个整数，指定小数点后的位数。
+- 当输出值的类型是 long double 时，modifier 部分就是 L，否则就省略它
+- 指定字段宽度时，数值默认为右对齐，如果希望数值左对齐，只需要在%的后面添加一个负号
+```//示例
+printf("A %8.2f plank foot can be cut into %5.0f pieces %6.2f feet long.\n",plank_length, piece_count, piece_length);
+
+//示例2
+%-15d 指定一个整数是左对齐，其字段宽度为 15 个字符
+```
 
 | printf 输出控制符 |  |
 |---:|---:|
@@ -51,3 +67,4 @@
 | %d | 按十进制整型数据的实际长度输出 |
 | %.mf | 输出实数时小数点后保留 m 位 |
 | %u | 输出无符号整型（unsigned） |
+| %*d | 输出\*字段宽度的整形数d |
