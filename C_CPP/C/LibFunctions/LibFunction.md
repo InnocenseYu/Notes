@@ -29,3 +29,11 @@
 ### return
 - 一个函数中可以有多个return a; return b; 等等语句，但是只要碰到一个return 语句，返回其后紧跟的值，整个函数结束
 - return 语句在一个函数中只会执行依次
+
+### getchar()
+- 返回int 型函数
+- 每次只能接收键盘**一个**输入字符；
+
+### putchar(ch)
+- 打印ch的一个字符
+- 同printf("%c",ch)

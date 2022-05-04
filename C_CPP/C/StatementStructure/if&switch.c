@@ -95,3 +95,40 @@ int main()
     return 0;
 }
 
+/////////////////////////
+////switch语句///////////
+/////////////////////////
+int main()
+{
+	int n = 0;
+	printf("请输入数字n：");
+	scanf("%d", &n);
+		switch (n)
+		{
+		case 1:
+		case 2:
+		case 3:
+        case 4:
+        case 5:
+			printf("工作日\n");
+            break;
+        case 6:
+            printf("星期六\n");
+            break;
+        case 7:
+            printf("星期日\n");
+
+        // 后续添加语句
+        // case 8:
+        //     printf("不合法输出,请输入1-7数值");
+        //     break;
+        
+        // 最后一个case是否添加break语句
+        //如果没有添加后续case时，虽然没有break语句，case 7执行完也会跳出当前switch，
+        //但是当在后面加入其他case 时，没有添加break，当输入7会同时执行后续代码，不利于代码的完整性，也不利于别人的参考。
+        //建议在switch 中最后一个case添加break语句
+
+        
+		}
+	return 0;
+}}
