@@ -32,5 +32,13 @@ int main()
 
 int main()
 {
-    char password[20] = NULL;
+    int i = 0;
+    for(;i<=10;i++)
+    {
+        if(i==5)
+        break;
+        printf("%d ",i);
+    }
+
+    return 0;
 }
