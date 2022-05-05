@@ -78,7 +78,7 @@ char* strcpy(char* destination, const char* source)
 //}
 
 
-	//代码优化3   //当时NULL时，程序不进行赋值拷贝，正常执行，不至于程序崩溃产生影响
+	//代码优化3   //当是NULL时，程序不进行赋值拷贝，正常执行，不至于程序崩溃产生影响
 //void my_strcpy(char* dest, char* src)
 //{
 	// if(src != NULL & dest != NULL)

@@ -29,3 +29,8 @@ int main()
 	return 0;
 
 }
+
+int main()
+{
+    char password[20] = NULL;
+}

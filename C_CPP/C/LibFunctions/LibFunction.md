@@ -26,6 +26,10 @@
 - strlen函数 求字符串的长度,只能针对字符串，''包裹的单个字符依次使用,分隔放在{}中的字符串在使用strlen()函数时，需要在最后一个字符末尾加个'\0'才能使用
 - 直到遇到'\0'停止运行，计算的是'\0'之前可以显示的字符个数
 
+### strcpy(destination,resource)
+- ""包裹的字符串数组必须使用系统函数strcpy()进行操作,使用下标操作数组的方法不适用，函数包含在string.h头文件中
+- char* strcpy(char* destination, const char* source) ，本文件夹下.c文件可参考
+
 ### return
 - 一个函数中可以有多个return a; return b; 等等语句，但是只要碰到一个return 语句，返回其后紧跟的值，整个函数结束
 - return 语句在一个函数中只会执行依次
@@ -33,6 +37,8 @@
 ### getchar()
 - 返回int 型函数
 - 每次只能接收键盘**一个**输入字符；
+- scanf()比较getchar()
+  - scanf读取结束标志
 
 ### putchar(ch)
 - 打印ch的一个字符
