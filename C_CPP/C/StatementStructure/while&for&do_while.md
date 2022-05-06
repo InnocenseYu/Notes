@@ -73,3 +73,33 @@ while(expr); //注意while 后面有";"号,循环结束。
   - 先做再判断，至少执行statement一次
   - while 后面无语句
   - ![](./do_while_loop.png)
+
+```C
+//break
+int main()
+{
+  int i = 10;
+  do
+  {
+    if(5 == i)
+    break;
+    printf("%d\n", i);
+  }while(i<10);
+  
+  return 0;
+}
+
+//continue
+int main()
+{
+  int i = 10;
+  do
+  {
+    if(5 == i)
+    continue;
+    printf("%d\n", i);
+  }while(i<10);
+
+  return 0;
+}
+```
