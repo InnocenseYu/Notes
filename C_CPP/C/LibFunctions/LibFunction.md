@@ -1,45 +1,66 @@
 ## 库函数
 
+### return
+- 一个函数中可以有多个 return a; return b; 等等语句，但是只要碰到一个 return 语句，返回其后紧跟的值，整个函数结束
+- return 语句在一个函数中只会执行依次
+
 ### scanf("%10s",name)
 - name 指针类型
 - 主要用于以某种标准形式输入的混合类型数据的读取和转换
 - 更主要是获取单词而不是获取字符串，因为字符串中的单词的间隔（空白字符）将会导致函数的结束；
 - 两种方法决定输入的结束，当两种方式都存在时，最先的满足的方法提前终止函数输入
   - 遇到第一个空白字符
-  - 制定了字符宽度，比如%10s,scanf("%10s",name)将会读入10个字符后停止
+  - 制定了字符宽度，比如 %10s,scanf("%10s",name) 将会读入 10 个字符后停止
 
 ### gets(name)
 - name 指针类型
-- 结束条件：直到遇到一个换行字符\n就会结束，enter回车键可以产生这个字符
+- 结束条件：直到遇到一个换行字符 \ n 就会结束，enter 回车键可以产生这个字符
 
-### sizeof(name) 
-- 计算变量、数组、类型的大小，单位是字节，是一种[运算符](../Operator/operators.md)；
-- 当name int型(4B)数组,两个元素时，计算所占空间大小为4*2=8B;
-- 当name char型(1B)数组,使用""包裹3个字符时，所占空间大小为4*1=4，包括所有未显示的部分末尾处'\0'；
-- 区分指针操作中数组名即为首元素的地址，arr等于&arr[0];
-- sizeof(arr)不等于sizeof(&arr[0])，这里arr指的是数组的全部存储区空间，&arr[0]指的是arr数组首元素在存储空间的位置
+### sizeof(name)
+- 计算变量、数组、类型的大小，单位是字节，是一种 [运算符](../Operator/operators.md)；
+- 当 name int 型 (4B) 数组, 两个元素时，计算所占空间大小为 4*2=8B;
+- 当 name char 型 (1B) 数组, 使用 ""包裹 3 个字符时，所占空间大小为 4*1=4，包括所有未显示的部分末尾处'\0'；
+- 区分指针操作中数组名即为首元素的地址，arr 等于 & arr[0];
+- sizeof(arr) 不等于 sizeof(&arr[0])，这里 arr 指的是数组的全部存储区空间，&arr[0] 指的是 arr 数组首元素在存储空间的位置
 - 类型大小就是该类型创建变量的大小
-  - 如char* a; short* a; double* a; 创建的变量 a 是不同类型的指针变量，存放地址，32位平台，sizeof(char*) = sizeof(short*) = sizeof(double*) = 4byte；64位系统大小为8byte
+  - 如 char* a; short* a; double* a; 创建的变量 a 是不同类型的指针变量，存放地址，32 位平台，sizeof(char*) = sizeof(short*) = sizeof(double*) = 4byte；64 位系统大小为 8byte
 
 
 ### strlen(name)
-- strlen函数 求字符串的长度,只能针对字符串，''包裹的单个字符依次使用,分隔放在{}中的字符串在使用strlen()函数时，需要在最后一个字符末尾加个'\0'才能使用
+- strlen 函数 求字符串的长度, 只能针对字符串，''包裹的单个字符依次使用, 分隔放在 {} 中的字符串在使用 strlen() 函数时，需要在最后一个字符末尾加个'\0'才能使用
 - 直到遇到'\0'停止运行，计算的是'\0'之前可以显示的字符个数
 
 ### strcpy(destination,resource)
-- ""包裹的字符串数组必须使用系统函数strcpy()进行操作,使用下标操作数组的方法不适用，函数包含在string.h头文件中
-- char* strcpy(char* destination, const char* source) ，本文件夹下.c文件可参考
+- "" 包裹的字符串数组必须使用系统函数 strcpy() 进行操作, 使用下标操作数组的方法不适用，函数包含在 string.h 头文件中
+- char* strcpy(char* destination, const char* source) ，本文件夹下. c 文件可参考
 
-### return
-- 一个函数中可以有多个return a; return b; 等等语句，但是只要碰到一个return 语句，返回其后紧跟的值，整个函数结束
-- return 语句在一个函数中只会执行依次
+### strcmp()
+- 比较两个字符串是否相等
+- int 型返回
+  - 第一个字符串大于第二个字符串，则返回大于 0 的数字
+  - 第一个字符串等于第二个字符串，则返回 0
+  - 第一个字符串小于第二个字符串，则返回小于 0 的数字
+  - 比较的不是字符串的长度，而是对应位置字符中字母的大小，a<b<…<z, 大写同理
+```C
+== 
+不能用于字符串比较，char password[20] = {0}; password == "lixinyu"
+但是可以用于两个字符数组指针 值 的比较，char* str1[] = NULL; char* str2[] = NULL; *str1 == *str2
+```
 
 ### getchar()
-- 返回int 型函数
-- 每次只能接收键盘**一个**输入字符；
-- scanf()比较getchar()
-  - scanf读取结束标志
+- 返回 int 型函数
+- 每次只能接收键盘 ** 一个 ** 输入字符；
+- scanf() 比较 getchar()
+  - scanf 读取结束标志
 
 ### putchar(ch)
-- 打印ch的一个字符
-- 同printf("%c",ch)
+- 打印 ch 的一个字符
+- 同 printf("%c",ch)
+
+### Sleep(m_seconds)
+- 按照时间 m_seconds 毫秒 休息一会
+- 包含在windows.h头文件中
+
+### system("permanent")
+- 执行系统命令给的函数
+- 可以写的参数 permanent 有 暂停 pause、清空屏幕cls 等

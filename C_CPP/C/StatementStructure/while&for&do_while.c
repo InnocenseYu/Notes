@@ -166,5 +166,59 @@ void binsearch(int x, int arr[])
         }
     }
     
+}
 
+///////////////////////////////////////////
+///////多个字符从两端移动 向中间汇聚//////////
+///////////////////////////////////////////
+int main()
+{
+	char str1[] = "Welcome to China!";
+	char str2[] = "#################";
+
+	int len = strlen(str1);
+	int left = 0;
+	int right = len - 1;
+
+	for (; left <= right; )
+	{
+		str2[left] = str1[left];
+		str2[right] = str1[right];
+		/*strcpy(str2[left], str1[left]);
+		strcpy(str2[right], str1[right];*/ //strcpy()操作整个字符串的
+		printf("%s\n", str2);
+		Sleep(1000);    // 休息1s
+		system("cls");   // 清屏
+		
+		left++;
+		right--;
+
+	}
+	printf("%s\n", str2);
+
+	return 0;
+}
+
+///////////////////////////////////
+/////模拟用户登录场景，只有三次机会///
+///////////////////////////////////
+int main()
+{
+    char password[20] = {0};
+    int i = 0;
+    for(i = 0; i<3; i++)
+    {
+        printf("input your password:");
+        scanf("%s",password);
+        if((strcmp(password,"lixinyu") == 0)
+        {
+            printf("login success!");
+            break;
+        }
+                
+    }
+    if(3 == i)
+    printf("login fail~");
+
+    return 0;
 }
