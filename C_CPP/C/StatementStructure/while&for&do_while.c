@@ -209,7 +209,7 @@ int main()
     for(i = 0; i<3; i++)
     {
         printf("input your password:");
-        scanf("%s",password);
+        scanf("%s",password); //scanf()函数直接读取字符串
         if((strcmp(password,"lixinyu") == 0)
         {
             printf("login success!");
@@ -221,4 +221,52 @@ int main()
     printf("login fail~");
 
     return 0;
+}
+
+////////////////////////////////
+////////三个数从大到小排列////////
+////////////////////////////////
+int main()
+{
+    int arr[5] = {0};
+    printf("input three number:");
+
+    int i = 0;
+    for (i = 0; i < 3; i++)
+    {
+        scanf("%d", &arr[i]);  // 
+
+    }
+
+    int sz = sizeof(arr) / sizeof(arr[0]);
+
+    int j = 0;
+    for (j = 0; j < sz - 1; j++)
+    {
+        int flag = 1;
+        int k = 0;
+        for (k = 0; k < sz - 1 - j; k++)
+        {
+            if (arr[k] < arr[k + 1])
+            {
+                int tem = arr[k];
+                arr[k] = arr[k + 1];
+                arr[k + 1] = tem;
+                flag = 0;
+            }
+        }
+
+        if (1 == flag)
+            break;
+
+    }
+
+    int n = 0;
+    for (n = 0; n < 3; n++)
+    {
+        printf("%d ", arr[n]);
+    }
+
+    return 0;
+
 }
