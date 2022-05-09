@@ -290,24 +290,29 @@ int main()
 }
 
 //////////////////////
-///////最大公约数//////
+///////最大公约数,最小公倍数//////
 //////////////////////
 int main()
 {
 	int a = 0, b = 0, r = 0;
 	scanf("%d %d", &a, &b);
 
+    int j,k;
+    j = a;
+    k = b;
+
 	//if (a > b)            //不需要比较，因为就算a = 2, b = 4, a%b == 2,下次循环
 							//b = 4赋值给a, a = 4
 							//r = 2赋值给b,b=2     //此时已经交换过来a>b
 	//{
-		while (a % b)
+		while (j % k)
 		{
-			r = a % b;
-			a = b;
-			b = r;
+            r = j % k;
+			j = k;
+			k = r;
 		}
-		printf("%d", b);
+		printf("Mostest Common Divisor: %d", k);
+        printf("Least Common multiple: %d",(a*b)/k);
 	//}
 	//else
 	//{
@@ -326,4 +331,74 @@ int main()
 	//while()
 
 	return 0;
+}
+
+
+/////////////////////////////////
+//////////平年 闰年判断///////////
+/////////////////////////////////
+
+int main()
+{
+   int year = 0;
+   
+   
+   for (int i = 0; i < 100; i++)
+   {
+       printf("input a year: ");
+       scanf("%d", &year);
+       
+       if ((year % 400) == 0)
+           printf("yes!\n");
+       else if (((year % 100) != 0) && ((year % 4) == 0))
+           printf("yes!\n");
+       else
+           printf("no run year!\n");
+   }
+
+   return 0;
+}
+
+
+/////////////////////////////////
+//////////计算2023年内所有闰年/////
+/////////////////////////////////
+int main()
+{
+    int year = 0;
+    int count = 0;
+
+    for (year = 0; year < 2023; year++)
+    {
+    
+        if ((year % 400) == 0)
+        {
+            printf("%d ", year);
+            count++;
+        }
+                
+        else if (((year % 100) != 0) && ((year % 4) == 0))
+        {
+            printf("%d ", year);
+            count++;
+        }
+
+    }
+            
+    //方法二：
+    for (year = 0; year < 2023; year++)
+    {
+    
+        if((year % 400) == 0 || ((year % 100) != 0) && ((year % 4) == 0))
+        {
+            printf("%d ", year);
+            count++;
+        }
+
+    }
+    
+    
+    printf("\ncount = %d", count);
+
+    return 0;
 }
