@@ -1,4 +1,8 @@
+#include <math.h>
+#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+
 
 int main()
 {
@@ -424,6 +428,34 @@ int main()
 			}
 
 			if (j == i)
+				printf("%d ", i);
+		}
+			
+	}
+
+	return 0;
+}
+//方法二
+// 当 i 不是质数时一定可以分解成：i = a*b，如16 = 2*8 = 4*4，
+// 所以在 i 的质因数中只要找一个就已经可以判断出来不是质数，另一个丢弃即可，所以选用较小的那个质因数
+// 同时，min(a,b)<=sqrt(i), 所以 i 试除的因子j<=sqrt(i)即可，并且sqrt(i) < i/2,也可写成j < i/2
+int main()
+{
+	int i = 0;
+	int j = 0;
+	for (i = 2; i < 100; i++)
+	{
+		if (2 == i)
+			printf("%d ", i);
+		else
+		{
+			for (j = 2; j <=sqrt(i); j++)
+			{
+				if (i % j == 0) //只要碰到一个能被整除就不是素数,跳出继续试除，跳出该for循环有两个原因，1、直接能被整除，2、j>=i
+					break;
+			}
+
+			if (j > sqrt(i))
 				printf("%d ", i);
 		}
 			

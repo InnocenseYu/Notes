@@ -75,3 +75,7 @@ int arr[5] = {0};
 ### system("permanent")
 - 执行系统命令给的函数
 - 可以写的参数 permanent 有 暂停 pause、清空屏幕cls 等
+
+### sqrt(n)
+- 对 n 开根号
+- 包含头文件 math.h
