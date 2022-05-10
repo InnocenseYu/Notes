@@ -513,3 +513,30 @@ int main()
 
 	return 0;
 }
+
+
+/////////////////////////////////
+//////////查找一个数组中的最大值//////////////
+/////////////////////////////////
+int main()
+{
+    int num[10] = { 0 };  //通过scanf函数输入，将值存储到数组num，下面循环或者数组操作方式是否合理
+    for (int i = 0; i < 10; i++)
+    {
+        scanf("%d",&num[i]);
+    }
+
+    int sz = sizeof(num) / sizeof(num[0]);
+    //int max = 0; //假设0为最大值是否准确? 
+    int max = num[0];
+
+    for (int j = 1; j < sz; j++)
+    {
+        //if (num[j] > max)    //如果num[] = {-1, -2, -3, -4} 所有数都没有max = 0大，这max本身最大，不能满足很多全为负数的比较
+        if (num[j] > max)     //选择数组的初始值
+            max = num[j];
+    }
+    printf("%d", max);
+
+    return 0;
+}
