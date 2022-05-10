@@ -213,7 +213,7 @@ int main()
     for(i = 0; i<3; i++)
     {
         printf("input your password:");
-        scanf("%s",password); //scanf()函数直接读取字符串
+        scanf("%s",password); //scanf()函数直接获取单词，字符串的话可能因为空格问题导致获取失败
         if((strcmp(password,"lixinyu") == 0)
         {
             printf("login success!");
