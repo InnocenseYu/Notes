@@ -7,7 +7,7 @@
 int main()
 {
     int n = 0;
-    while(i<10)
+    while(n<10)
     {
         //n++; 放到此处时，输出0 1 2 3 4 6 7 8 9 10，排除5
         if(5 == n)
@@ -214,7 +214,7 @@ int main()
     {
         printf("input your password:");
         scanf("%s",password); //scanf()函数直接获取单词，字符串的话可能因为空格问题导致获取失败
-        if((strcmp(password,"lixinyu") == 0)
+        if(strcmp(password,"lixinyu") == 0)
         {
             printf("login success!");
             break;

@@ -78,12 +78,14 @@ while(expr); //注意while 后面有";"号,循环结束。
 //break
 int main()
 {
-  int i = 10;
+  int i = 0;
   do
   {
     if(5 == i)
     break;
-    printf("%d\n", i);
+
+    printf("%d\n", i); // 打印输出：0 1 2 3 4
+    i++;
   }while(i<10);
   
   return 0;
@@ -92,12 +94,14 @@ int main()
 //continue
 int main()
 {
-  int i = 10;
+  int i = 0;
   do
   {
     if(5 == i)
     continue;
-    printf("%d\n", i);
+
+    printf("%d\n", i);  //打印输出：0 1 2 3 4 陷入死循环
+    i++;
   }while(i<10);
 
   return 0;
