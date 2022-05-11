@@ -72,3 +72,25 @@ for (i = 3; i < 100; i+=2) // i从奇数开始, i+=2, 判断下个奇数
 
 ### 符号位控制
 - 定义一个标记使用
+
+
+### 随机数
+- rand()函数生成的是伪随机数，虽然本次生成的数字是随机数，但是每次运行数字是相同的
+- 可以使用srand()函数为rand函数生成种子
+- 使用rand()之前未使用srand()时，相当于使用srand(1)
+- 当使用rand()之前使用srand()时，且是srand(2)，虽然rand()运行的随机值同srand(1)不同，但是二次运行时也是不变的；
+- 所以，srand(unsigned seed)的 seed必须**时刻变化**，可以使用**时间戳**
+- 时间戳
+  - 时间戳(秒) = 当前时间 - 计算机起始时间(1970.1.1.0:0:0)
+  - 使用 time()函数获取
+
+### 变量类型强制转换
+```C
+void srand(unsigned seed);    //seed 必须是时刻变化的量，unsigned类型，可以使用时间戳代替，使用time函数获取时间戳
+
+time_t time(time_t* const timer);  //函数包含在 time.h,time函数返回值类型是time_t，右键查看定义，time_t类型是使用typedef 重命名的long型
+
+srand((unsigned) time(NULL));  //调用一次即可
+//time函数返回值类型与srand函数输入参数类型不同，强制转换,类型使用括号包裹；
+//time函数输如参数为指针类型，防止空指针，初始化为NULL
+```

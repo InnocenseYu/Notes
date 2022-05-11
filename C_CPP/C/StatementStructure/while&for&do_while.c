@@ -516,7 +516,7 @@ int main()
 
 
 /////////////////////////////////
-//////////查找一个数组中的最大值//////////////
+///////查找一个数组中的最大值//////
 /////////////////////////////////
 int main()
 {
@@ -542,7 +542,7 @@ int main()
 }
 
 /////////////////////////////////
-//////////查找一个数组中的最大值//////////////
+//////////打印9 * 9乘法表/////////
 /////////////////////////////////
 int main()
 {
@@ -554,6 +554,84 @@ int main()
 		}
 		printf("\n");
 	}
+
+	return 0;
+}
+
+/////////////////////////////////
+//////////猜数字游戏//////////////
+/////////////////////////////////
+
+void menu()
+{
+	printf("****************************\n");
+	printf("****  1:start; 0:exit   ****\n");
+	printf("****************************\n");
+}
+
+void game()
+{
+	int guess = 0; //猜的数字
+	int gen_num = 0;
+	
+	//void srand(unsigned seed);    //seed 必须是时刻变化的量，unsigned类型，可以使用时间戳代替，使用time函数获取时间戳
+	//time_t time(time_t* const timer);  //函数包含在 time.h,time函数返回值类型是time_t，右键查看定义，time_t类型是使用typedef 重命名的long型
+	
+	//srand((unsigned) time(NULL));  //time函数返回值类型与srand函数输入参数类型不同，强制转换,类型使用括号包裹；
+	                                 //time函数输如参数为指针类型，防止空指针，初始化为NULL
+								     //过快输入，srand函数生成起点被重复执行，时间未发生改变而导致随机数相同，可以将srand函数远离rand函数，这样时间发生变化的概率变大
+
+	gen_num = rand()%100+1; //rand函数生成的是伪随机数（pseudo-random），需要srand函数生成rand函数的种子，所以调用rand()函数之前需要使用srand(seed)
+	                        //对100取模，生成在0 - 99的数值，设置1 - 100的值
+
+	while (1)
+	{
+		printf("请猜数字：");
+		scanf("%d", &guess);
+
+		if (guess > gen_num)
+		{
+			printf("猜大了\n");
+		}
+		else if (guess < gen_num)
+		{
+			printf("猜小了\n");
+		}
+		else
+		{
+			printf("恭喜你，猜对了\n");
+			break;
+		}
+	}
+
+}
+
+int main()
+{
+	int input = 0;
+	srand((unsigned)time(NULL)); // 使用一次rand生成起点
+
+	do //这里需要判断内容至少执行一次，使用 do_while 循环最合适
+	{
+		menu();
+		printf("请选择：");
+		scanf("%d", &input);
+
+		switch (input)
+		{
+		case 1:
+			game();
+			break;
+		case 0:
+			printf("退出游戏！");
+			break;
+		default:
+			printf("选错了！");
+			break;
+		}
+
+	} while (input);
+	
 
 	return 0;
 }
