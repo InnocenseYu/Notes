@@ -87,7 +87,11 @@ for(i = 0; i<3; i++)
 
 ### system("permanent")
 - 执行系统命令给的函数
-- 可以写的参数 permanent 有 暂停 pause、清空屏幕cls 等
+- 可以写的参数 permanent 有:
+  - pause 暂停
+  - cls 清空屏幕
+  - shutdown -s -t 60 关机 设置 时间 60s 
+  - shutdown -a 取消关机
 
 ### sqrt(n)
 - 对 n 开根号
