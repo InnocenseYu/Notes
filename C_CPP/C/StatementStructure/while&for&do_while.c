@@ -407,6 +407,37 @@ int main()
     return 0;
 }
 
+// 方法二 1 函数调用改写
+
+int is_leap_year(int year)
+{
+    if((year % 400) == 0 || ((year % 100) != 0) && ((year % 4) == 0))
+        return 1;
+    else
+        return 0 ;
+}
+
+int main()
+{
+    int year = 0;
+    int count = 0;
+
+    for (year = 1000; year < 2023; year++)
+    {
+        if(1 == is_leap_year(year))
+        {
+            printf("%d ", year);
+            count++;
+        }
+
+    }
+
+    printf("\ncount = %d", count);
+
+    return 0;
+}
+
+
 /////////////////////////////////
 //////////质数 素数判断 打印 /////
 /////////////////////////////////
@@ -435,15 +466,18 @@ int main()
 
 	return 0;
 }
+
+
 //方法二
 // 当 i 不是质数时一定可以分解成：i = a*b，如16 = 2*8 = 4*4，
 // 所以在 i 的质因数中只要找一个就已经可以判断出来不是质数，另一个丢弃即可，所以选用较小的那个质因数
 // 同时，min(a,b)<=sqrt(i), 所以 i 试除的因子j<=sqrt(i)即可，并且sqrt(i) < i/2,也可写成j < i/2
+
 int main()
 {
 	int i = 0;
 	int j = 0;
-	for (i = 2; i < 100; i++)
+	for (i = 3; i < 100; i+=2) //偶数不可能是素数，判断所以奇数即可，1 不是质数也不是素数，2是最小的偶数，所以从3开始
 	{
 		if (2 == i)
 			printf("%d ", i);
@@ -459,6 +493,36 @@ int main()
 				printf("%d ", i);
 		}
 			
+	}
+
+	return 0;
+}
+
+//方法二 1 函数调用
+int judge_prime(int a)
+{
+	int i = 0;
+	for (i = 2; i <= sqrt(a); i++)
+	{
+		if (0 == a % i)
+		{
+			return 0;  // 如果判断为真则不是素数，直接跳出函数；
+			           // 否则 a%i != 0,一直循环判断，直到 i>sqrt(a) 不满足 i<=sqrt(a) 跳出循环，a肯定是素数
+		}
+		
+	}
+
+	return 1; //a 是素数，返回值1
+}
+
+int main()
+{
+
+	//打印100 - 200之间的素数
+	for (int i = 100; i <= 200; i++)
+	{
+		if (1 == judge_prime(i))
+			printf("%d ", i);
 	}
 
 	return 0;
