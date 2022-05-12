@@ -35,10 +35,11 @@ for(i = 0; i<3; i++)
     }
 ```
 
-
 ### gets(name)
 - name 指针类型
-- 结束条件：直到遇到一个换行字符 \ n 就会结束，enter 回车键可以产生这个字符
+- 结束条件
+  - 直到遇到一个换行字符 "\n" 就会结束，enter 回车键可以产生这个字符
+  - 不同于scanf函数，遇到空格或者有字符宽度的输入限制
 
 ### sizeof(name)
 - 计算变量、数组、类型的大小，单位是字节，是一种 [运算符](../Operator/operators.md)；
@@ -57,6 +58,10 @@ for(i = 0; i<3; i++)
 ### strcpy(destination,resource)
 - "" 包裹的字符串数组必须使用系统函数 strcpy() 进行操作, 使用下标操作数组的方法不适用，函数包含在 string.h 头文件中
 - char* strcpy(char* destination, const char* source) ，本文件夹下. c 文件可参考
+- 直到遇到'\0'停止运行，复制的是'\0'之前可以显示的字符
+
+### printf
+- printf("%s", arr),%s输出内容仍然是直到遇到'\0'停止打印
 
 ### strcmp()
 - 比较两个字符串是否相等
@@ -66,16 +71,18 @@ for(i = 0; i<3; i++)
   - 第一个字符串小于第二个字符串，则返回小于 0 的数字
   - 比较的不是字符串的长度，而是对应位置字符中字母的大小，a<b<…<z, 大写同理
 ```C
-== 
+等于符号 ==
+
 不能用于字符串比较，char password[20] = {0}; password == "lixinyu"
 但是可以用于两个字符数组指针 值 的比较，char* str1[] = NULL; char* str2[] = NULL; *str1 == *str2
 ```
 
-### getchar()
+### int getchar(void)
 - 返回 int 型函数
-- 每次只能接收键盘 ** 一个 ** 输入字符；
-- scanf() 比较 getchar()
-  - scanf 读取结束标志
+- 输入参数无
+- 每次只能接收键盘**一个**输入字符，使用循环语句可以连续输入；
+- getchar()
+  - 结束标志为关键字 EOF
 
 ### putchar(ch)
 - 打印 ch 的一个字符

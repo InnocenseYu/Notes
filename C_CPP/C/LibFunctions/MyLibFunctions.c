@@ -142,3 +142,7 @@ char* my_strcpy(char* dest, const char* src) //const 修饰*src，防止src、de
 	}
 	return ret; //不写成return dest; 因为此时dest地址已经指向字符数组末尾地址，并不能代表数组地址
 }
+
+
+/////////////////////////
+///////
