@@ -1,8 +1,8 @@
 ## 函数的声明和定义
 
 ### 函数的声明
-- 在函数声明中，参数的名称list并不重要，只有参数的类型parameter是必需的；
-- 函数声明结构: return_type function_name( parameter1,* );
+- 在函数声明中，参数的名称parameter1并不重要，只有参数的类型define_type是必需的；
+- 函数声明结构: return_type function_name( define_type parameter1,* );
 - 函数的声明一般出现在函数的使用之前。既满足先声明后使用
 - 函数的定义是指函数的具体实现，交待函数的一个功能实现
 - 函数的声明和定义可以一起设置，也可以先声明，用";"结束，函数定义没有";"
@@ -24,6 +24,17 @@ return_type function_name( define_type parameter1,* )
 - C语言自带头文件使用<>包裹；
 - 自建头文件使用""包裹；
 
+### 函数头文件
+```C
+#ifndef __TEST_H__  //main函数使用Add函数时，包含头文件test.h即可 #include "test.h"
+#define __TEST_H__
+
+//函数的声明
+int Add(int x, int y);
+
+#endif
+```
+
 ### 函数的参数
 - 实参：
   - 真实传给函数的参数，叫实参
@@ -36,8 +47,7 @@ return_type function_name( define_type parameter1,* )
   - 因此形式参数只在函数中有效
 - 两者关系
   - 当实参传给形参的时，形参其实是实参的一份临时拷贝，对形参的修改是不会改变实参的
-
-## 函数的调用
+  - 数组传参，传递的是一个地址，数组的首地址&arr[0],对形参的操作实参也会变
 
 ### 传值调用
 函数的形参和实参分别占有不同内存块，对形参的修改不会影响实参
@@ -53,3 +63,22 @@ return_type function_name( define_type parameter1,* )
 ### 传值调用和传址调用的选择
 - 判断传递给函数的值在函数中是否需要进行值的操作，改变其地址上的值，否则的话传值操作即可
 
+### 函数的嵌套
+- 一个函数可以嵌套多个函数，函数和函数之间可以有机的组合
+
+
+### 链式访问
+- 把一个函数的返回值作为另一个函数的参数使用
+```C
+//例1
+char str[] = "abc";
+printf("%d\n",strlen(str));
+               //3
+//例2：
+	printf("%d", printf("%d", printf("%d", 43)));
+	       //1           //2        //43     
+```
+
+### 函数递归
+- 程序调用自身的编程技巧称为递归 recursion
+- 
