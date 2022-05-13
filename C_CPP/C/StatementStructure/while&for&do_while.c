@@ -122,11 +122,15 @@ int main()
 }
 
 
-/////////////////////////////////////////
-/////在一个有序数组中查找具体的某个数字n////
-/////////////////////////////////////////
-void binsearch(int x, int arr[])
+/////////////////////////////////////////////////
+/////二分查找 在一个有序数组中查找具体的某个数字n////
+/////////////////////////////////////////////////
+void main()
 {
+
+    int x;
+    int arr[] = {2, 3, 4, 5, 6, 7, 9};
+
     printf("input x  to find:");
     scanf("%d",&x);
 
@@ -141,24 +145,32 @@ void binsearch(int x, int arr[])
             break;
         }
     }
+
     if(i ==len)
         printf("can't find x");
+
 
 }
 
 // 以上程序算法优化, arr数组有序,假设arr[] = {9,8,7,6,5,4,3,2,1,0}
+
 // 二分查找算法，时间复杂度O(log_2(n))
-void binsearch(int x, int arr[])
+void main()
 {
+    int x;
+    int arr[] = {2, 3, 4, 5, 6, 7, 9};
+
     printf("input x  to find:");
     scanf("%d",&x);
 
-    int len = sizeof(arr)/sizeof(arr[0]);
     int left = 0;
+    int len = sizeof(arr)/sizeof(arr[0]);
     int right = len -1;
-    int mid = (left + right)/2;
+    
     for(; left <= right; )
     {
+        int mid = (left + right)/2;
+
         if(arr[mid] > x)
             right = mid -1;
         else if(arr[mid] < x)
@@ -166,9 +178,12 @@ void binsearch(int x, int arr[])
         else 
         {
             printf("%d",mid);
-            break;
+            return 0;
         }
     }
+    
+    if(left > right)
+        printf("没有找到");
     
 }
 
