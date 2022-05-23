@@ -78,7 +78,3 @@ printf("%d\n",strlen(str));
 	printf("%d", printf("%d", printf("%d", 43)));
 	       //1           //2        //43     
 ```
-
-### 函数递归
-- 程序调用自身的编程技巧称为递归 recursion
-- 
