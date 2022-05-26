@@ -94,3 +94,50 @@ srand((unsigned) time(NULL));  //调用一次即可
 //time函数返回值类型与srand函数输入参数类型不同，强制转换,类型使用括号包裹；
 //time函数输如参数为指针类型，防止空指针，初始化为NULL
 ```
+
+```C
+
+//三子琪游戏
+
+void menu()
+{
+	printf("*********************************\n");
+	printf("****** 1. Play     0. exit ******\n");
+	printf("*********************************\n");
+
+}
+
+void test()
+{
+	int input = 0;
+	do
+	{
+		menu();
+		printf("please start:>");
+		scanf("%d", &input);
+
+		switch (input)
+		{
+		case 1:
+			game();
+			break;
+		case 0:
+			printf("exit\n");
+			break;
+		default:
+			printf("please input again!\n");
+			break;
+		}
+
+	} while (input);
+
+}
+
+int main()
+{
+	test();
+
+	return 0;
+}
+
+```
