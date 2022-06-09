@@ -95,49 +95,52 @@ srand((unsigned) time(NULL));  //调用一次即可
 //time函数输如参数为指针类型，防止空指针，初始化为NULL
 ```
 
+### 二进制 位异或
 ```C
+// 2^2 = 0
+// 3^3 = 0
+// a^a = 0
+// 0^2 = 2
 
-//三子琪游戏
+// a^a = 0
+// 0^a = 0
 
-void menu()
-{
-	printf("*********************************\n");
-	printf("****** 1. Play     0. exit ******\n");
-	printf("*********************************\n");
+// 满足交换律
+//a^b^a = a^a^b = b
 
-}
+变量的交换：
+// 示例1：
+a = a^b;
+b = a^b; //a
+a = a^b //a^b^a = a^a^b = b
 
-void test()
-{
-	int input = 0;
-	do
-	{
-		menu();
-		printf("please start:>");
-		scanf("%d", &input);
+1^2^3^4^5^1^2^3^4 = 1^1^2^2^3^3^4^4^5 = 0^0^0^0^5 = 5
 
-		switch (input)
-		{
-		case 1:
-			game();
-			break;
-		case 0:
-			printf("exit\n");
-			break;
-		default:
-			printf("please input again!\n");
-			break;
-		}
+加密：
+// 示例2：
+//第一步，明文（text）与密钥（key）进行异或运算，可以得到密文（cipherText）
+text ^ key = cipherText
 
-	} while (input);
+//第二步，密文与密钥再次进行异或运算，就可以还原成明文
+cipherText ^ key = text
 
-}
+//原理很简单，如果明文是 x，密钥是 y，那么 x 连续与 y 进行两次异或运算，得到自身
+(x ^ y) ^ y
+= x ^ (y ^ y)
+= x ^ 0
+= x
 
-int main()
-{
-	test();
+数据备份
+// 文件 x 和文件 y 进行异或运算，产生一个备份文件 z。
+x ^ y = z
 
-	return 0;
-}
+//以后，无论是文件 x 或文件 y 损坏，只要不是两个原始文件同时损坏，就能根据另一个文件和备份文件，进行还原。
+x ^ z
+= x ^ (x ^ y) 
+= (x ^ x) ^ y
+= 0 ^ y
+= y
+
+上面的例子是 y 损坏，x 和 z 进行异或运算，就能得到 y
 
 ```
