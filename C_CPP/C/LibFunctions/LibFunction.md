@@ -71,6 +71,7 @@ for(i = 0; i<3; i++)
 
 ### printf
 - printf("%s", arr),%s输出内容仍然是直到遇到'\0'停止打印
+- printf("%d\n",b),使用的是b的原码
 
 ### strcmp()
 - 比较两个字符串是否相等
