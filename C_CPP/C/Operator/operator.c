@@ -15,6 +15,13 @@ int main()
         count++;
     }
 
+    //方法二
+    // while(num)
+    // {
+    //     count++;
+    //     num = num&(num-1);
+    // }  
+
     printf("num二进制中1的个数 = %d\n",count);
 
     return 0;
