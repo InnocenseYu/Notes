@@ -54,7 +54,7 @@
 
 
 ### 数组作为函数参数
-- 对数组 arr 进行传参，实际上传递过去的是数组 arr 首元素的地址 &arr[0],
+- 对数组 arr 进行传参，实际上传递过去的是数组 arr 首元素的地址 &arr[0]
 ```C
 void sort(int arr[], int sz);
 void sort(int arr[10], int sz);
@@ -77,3 +77,5 @@ void sort(int* arr, int sz); //第三种
   - ![](./array_name1.png)
 
   - ![](./array_name2.png)
+
+[使用sizeof计算数组名作为形参](./../LibFunctions/LibFunction.md/#示例代码)

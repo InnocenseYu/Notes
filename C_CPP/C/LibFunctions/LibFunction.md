@@ -58,6 +58,8 @@ for(i = 0; i<3; i++)
 - sizeof(arr) 不等于 sizeof(&arr[0])，这里 arr 指的是数组的全部存储区空间，&arr[0] 指的是 arr 数组首元素在存储空间的位置
 - 类型大小就是该类型创建变量的大小
   - 如 char* a; short* a; double* a; 创建的变量 a 是不同类型的指针变量，存放地址，32 位平台，sizeof(char*) = sizeof(short*) = sizeof(double*) = 4byte；64 位系统大小为 8byte
+
+#### 示例代码
 ```C
 short s = 0; // short 类型占2个字节
 int a = 10;
@@ -67,6 +69,34 @@ printf("%d\n", sizeof a); //4
 printf("%d\n", sizeof(a)); //4
 printf("%d\n", sizeof(int)); //4
 //printf("%d\n", sizeof int); //err
+
+
+////////////////////////////////
+///// 1 2 3 4 分别输出多少//////
+///// 4 4 40 10 ////////////////
+///////////////////////////////
+void test1(int arr[])
+{
+  printf("%d\n", sizeof(arr));  //1 形参传递的是地址， 32bit平台， 地址 4byte 
+}
+
+void test2(char ch[])
+{
+  printf("%d\n", sizeof(ch));  //2 形参传递的是地址， 32bit平台， 地址 4byte
+}
+
+int main()
+{
+  int arr[10] = {0};
+  char ch[10] = {0};
+  printf("%d\n", sizeof(arr));   //3
+  printf("%d\n", sizeof(ch));    //4
+  test1(arr);
+  test2(ch);
+
+  return 0;
+}
+
 ```
 
 ### strlen(name)
