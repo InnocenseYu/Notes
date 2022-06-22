@@ -37,3 +37,4 @@ int main()
 // a = *pa = **ppa = ***pppa
 // &a = pa = *ppa = **pppa
 // pppa存储ppa的地址，*pppa即为ppa的值（ppa的值为pa的地址），**pppa即为pa的值（pa的值为a的地址），则***pppa即为a的值
+
