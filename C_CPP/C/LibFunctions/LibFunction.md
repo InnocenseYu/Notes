@@ -52,7 +52,23 @@ for(i = 0; i<3; i++)
   - 不同于scanf函数，遇到空格或者有字符宽度的输入限制
 
 ### sizeof(name)
-- 计算变量、数组、类型的大小，单位是字节，是一种 [运算符](../Operator/operators.md)；
+- 计算变量、数组、类型的大小，单位是字节，是一种 [运算符](../Operator/operators.md);
+- 返回类型是 size_t，重定义的 unsigned integer 无符号 int;
+  ```C
+  int i; //全局变不初始化-默认是 0
+  int main()
+  {
+    i--;
+    if(i>sizeof(i))    // i = -1 有符号整型； sizeof(i) = 4 - 计算变量/类型所占内存的大小 >=0 无符号整数;
+                       // i > sizeof(i) 
+      printf(">\n“);
+    else
+      printf("<\n");
+
+    return 0;
+  }
+
+```
 - 当 name int 型 (4B) 数组, 两个元素时，计算所占空间大小为 4*2=8B;
 - 当 name char 型 (1B) 数组, 使用 ""包裹 3 个字符时，所占空间大小为 4*1=4，包括所有未显示的部分末尾处'\0'；
 - 区分指针操作中数组名即为首元素的地址，arr 等于 & arr[0];

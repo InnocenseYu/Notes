@@ -118,7 +118,12 @@ double b = 5/2.0;
 printf("%lf",b); //2.5 浮点数
 ```
 ### 整形提升
-- 字符(char)和短整型(short)操作数只要参与运算，使用之前要被转换为普通整型(int)来参与计算的
+> A character, a short integer, or an integer bit-field, all either signed or not, or an object of enumeration type, may be used in an expression wherever an integer maybe used. If an int can represent all the values of the original type, then the value is converted to int; otherwise the value is converted to unsigned int.
+> 
+> 翻译：
+> 无论使用什么整数，都可以在表达式中使用 char，short int 或 int 字段（全部带符号或没有符号）或枚举类型的对象。如果原始类型的所有值都可用 int 类型表示，则其值将被转换为 int 类型；否则将被转换为 unsigned int 类型
+
+- 原始类型为 字符(char) 、短整型(short) 、有符号或者无符号等操作数只要在表达式中被使用，使用之前要被转换为普通整型(int)来参与计算的
 - 按照变量的**数据类型**的**符号位**来提升的
 
 ```C
@@ -126,11 +131,11 @@ printf("%lf",b); //2.5 浮点数
 char c1 = -1;
 /*
 变量 c1 char 类型，在内存中存储的二进制位(补码)只有8个比特位：
-1111111
+11111111
 因为 char 为有符号的 char
-所以整形提升的时候，高位补充符号位，即为1
+所以整形提升的时候，高位(从右往左，第九位之后的所有位)补充符号位(提升前值的符号位)的数字，即为1
 提升之后的结果是：
-11111111111111111111111111111111
+111111111111111111111111|11111111（不包括 | ）
 */
 
 - 正数的整形提升
@@ -139,9 +144,9 @@ char c2 = 1;
 变量c2的二进制位(补码)中只有8个比特位：
 00000001
 因为 char 为有符号的 char
-所以整形提升的时候，高位补充符号位，即为0
+所以整形提升的时候，高位(从右往左，第九位之后的所有位)补充符号位(提升前值的符号位)的数字，即为0
 提升之后的结果是：
-00000000000000000000000000000001
+000000000000000000000000|00000001 （不包括 | ）
 */
 
 - 无符号整形提升，高位补0
