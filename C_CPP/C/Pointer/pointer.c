@@ -38,3 +38,34 @@ int main()
 // &a = pa = *ppa = **pppa
 // pppa存储ppa的地址，*pppa即为ppa的值（ppa的值为pa的地址），**pppa即为pa的值（pa的值为a的地址），则***pppa即为a的值
 
+
+/////////////////////////////////////////////
+////// 使用两种方法打印数组内容////////////////
+/////////////////////////////////////////////
+
+//方法1 形参使用数组
+void print(int arr[], int sz)
+{
+    for(int i = 0; i<sz; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+}
+
+//方法2 形参使用指针
+void print(int* p, int sz)
+{
+    for(int i = 0; i<sz; i++)
+    {
+        printf("%d ",*(p+i));
+    }
+}
+
+int main()
+{
+    int arr[] = {1,3,4,5,6,7,8};
+    int sz = sizeof(arr)/sizeof(arr[0]);
+    print(arr,sz);
+
+    return 0;
+}

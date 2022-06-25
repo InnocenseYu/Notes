@@ -54,21 +54,30 @@ for(i = 0; i<3; i++)
 ### sizeof(name)
 - 计算变量、数组、类型的大小，单位是字节，是一种 [运算符](../Operator/operators.md);
 - 返回类型是 size_t，重定义的 unsigned integer 无符号 int;
-  ```C
+```C
+// 示例1
   int i; //全局变不初始化-默认是 0
   int main()
   {
     i--;
-    if(i>sizeof(i))    // i = -1 有符号整型； sizeof(i) = 4 - 计算变量/类型所占内存的大小 >=0 无符号整数;
-                       // i > sizeof(i) 
+    if(i>sizeof(i))    // i = -1 有符号整型；
+                       // i > sizeof(i)  // int -> unsigned int 
+                       // i = -1, 内存中操作的补码为：
+                       // 10000000000000000000000000000001(原)
+                       // 11111111111111111111111111111110(反)
+                       // 11111111111111111111111111111111(补)
+                       // int -> unsigned int, 补码的符号位 1 不是符号位，当作值来对待，且是正数，正数 原码 = 补码 
+                       // sizeof(i) 返回 size_t(typedef) -> unsigned int
+                       // sizeof(i) = 4, 00000000000000000000000000000100
+                       // i > sizeof(i); 11111111111111111111111111111111 > 00000000000000000000000000000100  return true;
       printf(">\n“);
     else
       printf("<\n");
 
     return 0;
   }
-
 ```
+
 - 当 name int 型 (4B) 数组, 两个元素时，计算所占空间大小为 4*2=8B;
 - 当 name char 型 (1B) 数组, 使用 ""包裹 3 个字符时，所占空间大小为 4*1=4，包括所有未显示的部分末尾处'\0'；
 - 区分指针操作中数组名即为首元素的地址，arr 等于 & arr[0];
@@ -76,8 +85,8 @@ for(i = 0; i<3; i++)
 - 类型大小就是该类型创建变量的大小
   - 如 char* a; short* a; double* a; 创建的变量 a 是不同类型的指针变量，存放地址，32 位平台，sizeof(char*) = sizeof(short*) = sizeof(double*) = 4byte；64 位系统大小为 8byte
 
-#### 示例代码
 ```C
+// 示例2
 short s = 0; // short 类型占2个字节
 int a = 10;
 printf("%d\n", sizeof(s = a + 5)); //2, a + 5的值赋值到 s 类型，其实不会进行运算，sizeof 计算的是s的大小；
@@ -87,27 +96,24 @@ printf("%d\n", sizeof(a)); //4
 printf("%d\n", sizeof(int)); //4
 //printf("%d\n", sizeof int); //err
 
-
-////////////////////////////////
-///// 1 2 3 4 分别输出多少//////
-///// 4 4 40 10 ////////////////
-///////////////////////////////
+// 示例3
+// 1 2 3 4 四个指示位置分别输出多少
 void test1(int arr[])
 {
-  printf("%d\n", sizeof(arr));  //1 形参传递的是地址， 32bit平台， 地址 4byte 
+  printf("%d\n", sizeof(arr));  //1 形参传递的是地址， 32bit平台， 地址 4byte 输出4
 }
 
 void test2(char ch[])
 {
-  printf("%d\n", sizeof(ch));  //2 形参传递的是地址， 32bit平台， 地址 4byte
+  printf("%d\n", sizeof(ch));  //2 形参传递的是地址， 32bit平台， 地址 4byte 输出4
 }
 
 int main()
 {
   int arr[10] = {0};
   char ch[10] = {0};
-  printf("%d\n", sizeof(arr));   //3
-  printf("%d\n", sizeof(ch));    //4
+  printf("%d\n", sizeof(arr));   //3 输出4 * 10 = 40
+  printf("%d\n", sizeof(ch));    //4 输出1 * 10 = 10
   test1(arr);
   test2(ch);
 
