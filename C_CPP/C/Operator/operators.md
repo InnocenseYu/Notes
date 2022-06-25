@@ -1,5 +1,8 @@
 ## 运算符 / 操作符
 
+### 为题汇总 ？？？
+- 整形提升/隐式转换
+
 ### 自增和自减运算符 (-- 和 ++)
 - 作用是使变量的值增 1 或减 1
 - ++i ：在使用 i 之前，先使 i 的值加 1，如果 i 的原值为 3，则执行 j=++i 后，j 的值为 4
@@ -97,8 +100,9 @@ printf("%d",b); //输出b为 -1
 
 ### 逗号表达式
 - 逗号表达式，就是用逗号隔开的多个表达式
-- 逗号表达式，从左向右依次执行
-- 整个表达式的结果是最后一个表达式的结果
+- 整个表达式的结果是最后一个表达式返回的结果
+- 最后一个表达式逗号之前的表达式也会执行，整个表达式的执行顺序是从左向右依次执行
+- 虽然整个表达式的结果是最后一个表达式的结果，但是最后一个表达式逗号之前的表达式运算的变量会参与最后一个表达式的运算
 
 ```C
 int a = 1;
@@ -117,7 +121,7 @@ printf("%d", a); // 商 2 余 1
 double b = 5/2.0;
 printf("%lf",b); //2.5 浮点数
 ```
-### 整形提升
+### 整形提升/隐式转换
 > A character, a short integer, or an integer bit-field, all either signed or not, or an object of enumeration type, may be used in an expression wherever an integer maybe used. If an int can represent all the values of the original type, then the value is converted to int; otherwise the value is converted to unsigned int.
 > 
 > 翻译：
@@ -151,11 +155,33 @@ char c2 = 1;
 
 - 无符号整形提升，高位补0
 
-//实例1
+//实例 
+int main()
+{
+	char a = 3; //3的二进制形式：00000000000000000000000000000011,因为 char 类型 8个字节 将对32位二进制进行截断存储 00000011(原码 = 补码)
+	char b = 127;// 32位截断存储为 011111111(原码 = 补码)
+	// a + b 运算前 整型提升 char -> int 
+	// a 00000011 -> 00000000000000000000000000000011
+	// b 01111111 -> 00000000000000000000000001111111
+	// a + b(int)    00000000000000000000000010000010
+	// c = a + b, char c, 截断存储
+	// c = 10000010
+	char c = a + b; 
+
+	printf("%d\n", c); // %d输出，c 发生整型提升, 看最高位符号位 符号
+  // c = 10000010 char -> int 
+	// c = 11111111111111111111111110000010 int (补)
+	// c = 11111111111111111111111110000001 int (反)
+	// c = 10000000000000000000000001111110 int (原) //-126
+
+	return 0;
+}
+
+//实例1 ????
 //a,b整形提升之后,变成了负数,所以表达式a==0xb6 , b==0xb600 的结果是假,但是c不发生整形提升,则表达式c==0xb6000000 的结果是真
 int main()
 {
-  char a = 0xb6;
+  char a = 0xb6; // a 在内存中是多少 ？？？？
   short b = 0xb600;
   int c = 0xb6000000;
   if(a==0xb6)
@@ -172,17 +198,33 @@ int main()
 int main()
 {
   char c = 1;
-  printf("%u\n", sizeof(c)); //1
+  printf("%u\n", sizeof(c));  //1
   printf("%u\n", sizeof(+c)); //4
   printf("%u\n", sizeof(-c)); //4
-  printf("%u\n", sizeof(!c)); //1
+  printf("%u\n", sizeof(!c)); //1 // 为什么!c没有参与整型提升 ？？？？？？？
 
   return 0;
 }
 
+//实例3
+int main() 
+{ 
+  char a = 0xfb;  // 0xfb = 11111011 原，10000100 反，10000101补
+  unsigned char b = 0xfb; // 无正负之分，不能赋值负数，不然会出现错误 ？？？
+
+  printf("a = %c", a); 
+  printf("\nb = %c", b); 
+
+  if (a == b) // a 是 **有符号** char类型，内存中补码 符号位是1，为负值, 整型提升, 符号位之前的用 1 补齐；
+    printf("\nSame"); 
+  else
+    printf("\nNot Same"); 
+
+  system("pause");
+  return 0; 
+}
+
 ```
-### 算术转换
-????
 
 ### 赋值操作符
 - =      区分 == 判断相等符号

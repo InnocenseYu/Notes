@@ -143,7 +143,7 @@ srand((unsigned) time(NULL));  //调用一次即可
 // 0^2 = 2
 
 // a^a = 0
-// 0^a = 0
+// 0^a = a
 
 // 满足交换律
 //a^b^a = a^a^b = b
