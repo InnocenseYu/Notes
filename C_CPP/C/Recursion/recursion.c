@@ -188,3 +188,36 @@ int main()
 
 	return 0;
 }
+
+
+//////////////////////////////////////////////////////////
+////////////// 实现 n 的 k 次方 递归实现////////////////////
+//////////////////////////////////////////////////////////
+double Pow(int n, int k) 
+{
+	if (k>0)
+	{
+		return n*Pow(n, --k);
+	}
+	else if(0 == k)
+	{
+		return 1;
+	}
+	else
+	{
+		//return (1 / (Pow(n, -k));  // -k 将 k<0 转换为 k>0 即可使用 n*Pow(n, --k)
+		return (1.0 / Pow(n, -k)); // 通过 1.0 隐式转换 为浮点型
+	}
+}
+
+int main()
+{
+	int n = 0;
+	int k = 0;
+	scanf("%d%d", &n, &k);
+
+	double ret = Pow(n, k);
+	printf("%lf", ret);
+
+	return 0;
+}

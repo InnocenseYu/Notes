@@ -184,3 +184,70 @@ x ^ z
 上面的例子是 y 损坏，x 和 z 进行异或运算，就能得到 y
 
 ```
+
+
+### 水仙花数
+
+```C
+// 水仙花数: 指一个 n 位数，其各位数字的 n 次方之和 等于该数本身，如：153 = 1^3 + 5^3 + 3^3，则153是一个水仙花数
+
+// 求出0~100000之间的所有水仙花数并输出
+
+// 几位数
+int num_count(n)
+{
+	int count = 1;
+
+	while (n /= 10)
+	{
+		count++;
+	}
+
+	return count;
+}
+
+// n^k
+int Pow(int n, int k)
+{
+	if (k > 0)
+	{
+		return n * Pow(n, --k);
+	}
+	else if (0 == k)
+	{
+		return 1; // 0^0 == 1
+	}
+	else
+	{
+		return (1 / (Pow(n, -k)));  // -k 将 k<0 转换为 k>0 即可使用 n*Pow(n, --k)
+	}
+}
+
+void waterflower(int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		int sum = 0;
+		int tmp = i; //一般不改变操作数，容易导致混乱
+		while (tmp)
+		{
+			sum += Pow(tmp % 10, num_count(i)); // n^k
+			tmp /= 10;
+		}
+
+		if (sum == i)
+		{
+			printf("%d\n", i);
+		}
+	}
+
+}
+
+int main()
+{
+	waterflower(100000);
+
+	return 0;
+}
+
+```
