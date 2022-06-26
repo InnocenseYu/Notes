@@ -124,3 +124,67 @@ int fib(int n)
 
 	return c;
 }
+
+///////////////////////////////////////////////////
+////////////// 数组前后反转，不使用库函数/////////////
+///////////////////////////////////////////////////
+
+//// 方法1
+//void reverse_string(char arr[])
+//{
+//	int start = 0;
+//	int end = strlen(arr) - 1;
+//	char tmp = 0;
+//
+//	if (start <= end)
+//	{
+//		tmp = arr[start];
+//		arr[start] = arr[end];
+//		arr[end] = tmp;
+//
+//		start++;
+//		end--;
+//	}
+//
+//}
+
+
+int my_strlen(char* arr) // 形参使用的是指针，也可以这样写 char arr[], 函数内部语句不用变
+{
+	int count = 0;
+	while (*arr != '\0') // 只要是地址就可以使用 * 符号符操作
+	{
+		count++;
+		arr++;
+	}
+
+	return count;
+}
+
+// 方法2 递归实现
+void reverse_string(char arr[])  // arr[] = "abcdef\0"
+{
+	char tmp = arr[0];
+	int len = my_strlen(arr); // 为获取数组长度做准备
+	arr[0] = arr[len-1]; 
+	arr[len - 1] = '\0'; // 构造my_strlen函数的判断条件
+	//arr[len - 1] = tmp; // 可否在这个位置交换？完成首次首尾交换？
+	// 不行。假设 arr[] = "abcdef\0"，到达该句完成第一次首尾交换，arr[] = "fbcdea\0",下次执行迭代的话，应该操作"bcde\0", 所以迭代之前 a 的位置应该是 \0;
+	
+	if (my_strlen(arr+1) >= 2)
+	{
+		reverse_string(arr + 1); // 函数入口 形参为数组，数组名也是地址，也可以使用 arr+1 操作
+	}
+	
+	arr[len - 1] = tmp;
+}
+
+
+int main()
+{
+	char arr[] = "abcdef";
+	reverse_string(arr);
+	printf("%s", arr);
+
+	return 0;
+}
