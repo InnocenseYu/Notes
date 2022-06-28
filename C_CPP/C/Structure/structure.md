@@ -1,10 +1,10 @@
 ## 结构体
 
-
 ### 定义方式：
 - struct 标记 / 结构名 { };
   - 定义的结构体只是一个描述文件，不会开辟内存空间，只要使用成员变量时才会开辟内存空间
   - 声明结构
+  - 结构体是一些值的集合，这些值称为成员变量
   - {}中存放 成员变量，结构的成员变量可以是标量、数组、指针，甚至是其他结构体
   - 可以多次使用标记定义 结构变量
 
@@ -47,19 +47,93 @@ struct
 - struct 标记 / 结构名 结构变量;
 - 此时 结构变量 是局部变量
 
-### 定义结构体指针
-- struct 标记 / 结构名 * 结构变量;
-  - 定义结构体指针，结构变量自身类型为 struct 标记 / 结构名 *，指向类型为 struct 标记 / 结构名
-
 ### 结构体初始化
 - 定义时，直接初始化
 - 使用结构体定义结构变量时，使用 {} 赋值初始化
   - struct 标记 / 结构名 结构变量 = { };
 
+```C
+// 结构体初始化 //
+
+struct S
+{
+	int a;
+	char c;
+	char arr[20];
+	double d;
+};
+
+struct T
+{
+	char ch[10];
+	struct S s; // 结构体中定义 结构体
+	char* p;
+};
+
+void print1(struct T tmp) // 结构体传参，tmp 是对传参变量数据的一份临时拷贝。
+{
+    printf("%s\n", tmp.ch);  // hehe
+	printf("%s\n", tmp.s.arr); // hello world
+	printf("%lf\n", tmp.s.d); // 3.14
+	printf("%s", tmp.p); // hello bit，换行
+}
+
+void print2(struct T* tmp) // 结构体 传地址
+{
+	printf("%s\n", tmp->ch);  // hehe
+	printf("%s\n", tmp->s.arr); // hello world
+	printf("%lf\n", tmp->s.d); // 3.14
+	printf("%s", tmp->p); // hello bit，换行
+}
+
+int main()
+{
+	char arr[] = "hello bit\n"; // hello bit 换行
+	struct T t = { "hehe", {100, 'w', "hello world", 3.14}, arr }; // 初始化时，使用{}包裹，结构体中 结构体初始化仍然使用{}包裹
+
+    print1(t);
+    print2(&t);
+
+	// printf("%s\n", t.ch);  // hehe
+	// printf("%s\n", t.s.arr); // hello world
+	// printf("%lf\n", t.s.d); // 3.14
+	// printf("%s", t.p); // hello bit，换行 
+	 
+	return 0;
+}
+```
+
 ### 结构变量成员操作
 - 结构体变量 sb. 成员 访问结构体内部变量
 - 结构体指针变量 sp-> 成员 访问结构体内部变量
   - 对成员是 "" 包裹、字符数组类型，使用 strspy() 函数操作，不能类似其他数组使用下标操作
+
+### 定义结构体指针
+- struct 标记 / 结构名 * 结构变量;
+  - 定义结构体指针，结构变量自身类型为 struct 标记 / 结构名 *，指向类型为 struct 标记 / 结构名
+```C
+void print2(struct T* tmp) // 结构体 传地址
+{
+	printf("%s\n", tmp->ch);  // hehe
+	printf("%s\n", tmp->s.arr); // hello world
+	printf("%lf\n", tmp->s.d); // 3.14
+	printf("%s", tmp->p); // hello bit，换行
+}
+
+int main()
+{
+	char arr[] = "hello bit\n"; // hello bit 换行
+	struct T t = { "hehe", {100, 'w', "hello world", 3.14}, arr }; // 初始化时，使用{}包裹，结构体中 结构体初始化仍然使用{}包裹
+
+    print2(&t);
+	return 0;
+}
+
+```
+### 结构体传参
+- 结构体传参，形参 是对传入 实参结构变量数据 的一份临时拷贝
+- 结构体 传地址，通过传入实参的 地址 操作 实参结构变量数据，不会形成数据的临时拷贝，开辟内存空间
+- 推荐结构体传参 使用结构体地址
 
 ## 类型重定义 typedef
 - 为某一类型重命名
@@ -76,11 +150,11 @@ struct
 typedef struct Stu
 {
     char name[20];
-    int age;
+    short age;
     char sex;
-    char ID[19];
-}Tec; // 使用 typedef 类型重定义 定义的 结构体标签Tec
-      // Tec 相当于：
+    char phone[12];
+}Stu; // 使用 typedef 类型重定义 定义的 结构体标签 Stu
+      // Stu 相当于：
       // struct Stu
       // {
       //    char name[20];
@@ -92,16 +166,28 @@ typedef struct Stu
 struct Stu
 {
     char name[20];
-    int age;
+    short age;
     char sex;
-    char ID[19];
+    char phone[12];
 }s1; //使用结构体定义结构变量s1
+
+// 定义结构变量指针//
+struct Stu*
+{
+    char name[20];
+    short age;
+    char sex;
+    char phone[12];
+}s1; //使用结构体定义结构变量指针 s1
 
 int main()
 {
     struct Stu s; // 使用结构体标记 struct Stu 定义结构变量
-    Tec s1; // 使用 typedef 类型重定义的标签 Tec 来定义变量 s1
+    Stu s1; // 使用 typedef 类型重定义的标签 Stu 来定义变量 s1
             
+    struct Stu* s; // 使用结构体标记 struct Stu* 定义结构变量指针
+    Stu* s1; // 使用 typedef 类型重定义的标签 Stu 来定义指针变量 s1
+
             // 即使结构体被 typedef 重定义了也可使用结构体标记来
             // 定于结构变量 
 }
