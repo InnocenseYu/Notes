@@ -196,7 +196,9 @@ int a = 5/2;
 printf("%d", a); // 商 2 余 1
 double b = 5/2.0;
 printf("%lf",b); //2.5 浮点数
+
 ```
+
 ### 整形提升/隐式转换
 > A character, a short integer, or an integer bit-field, all either signed or not, or an object of enumeration type, may be used in an expression wherever an integer maybe used. If an int can represent all the values of the original type, then the value is converted to int; otherwise the value is converted to unsigned int.
 > 

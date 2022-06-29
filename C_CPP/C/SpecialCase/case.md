@@ -125,6 +125,8 @@ for (i = 3; i < 100; i+=2) // i从奇数开始, i+=2, 判断下个奇数
 
 
 ### 变量类型强制转换
+
+[变量类型强制转换](../Storage%26Variable/storage%26variable.md/#变量类型强制转换)
 ```C
 void srand(unsigned seed);    //seed 必须是时刻变化的量，unsigned类型，可以使用时间戳代替，使用time函数获取时间戳
 

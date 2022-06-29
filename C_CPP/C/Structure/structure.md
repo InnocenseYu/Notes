@@ -124,8 +124,9 @@ int main()
 {
 	char arr[] = "hello bit\n"; // hello bit 换行
 	struct T t = { "hehe", {100, 'w', "hello world", 3.14}, arr }; // 初始化时，使用{}包裹，结构体中 结构体初始化仍然使用{}包裹
+  
+  print2(&t);
 
-    print2(&t);
 	return 0;
 }
 
