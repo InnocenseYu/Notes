@@ -5,7 +5,7 @@
 - 类型的意义
   - 使用该类型开辟空间的大小；
   - 如何看待内存空间的视角
-- 整型
+- 整型（类型大小 存放在 vs 软件 limits.h 头文件中）
   - int 的原型是 signed int, 一般不写signed 默认是有符号整型, 32位系统 int 大小 4byte
   - 无符号整型 unsigned int a = 2;
   - char 类型1byte 8bit, 也可以被singed, unsigned 关键字修饰
@@ -29,7 +29,6 @@
     	- 100000000
     	- 截断低8bit 00000000 结果为0
 
-
     - ![](../Storage%26Variable/char_value_range.png)
 
   - 短整型 short int a = 2; a 至少2个字节长度，不大于int, 也可以被singed, unsigned 关键字修饰，signed short int a = 2; 一般只写short a = 2; 即可，32位系统short 大小 2byte
@@ -40,6 +39,28 @@
 - 浮点型
   - fload 大小 4byte, 单精度浮点型
   - double 大小 8byte, 双精度浮点型
+  - long double
+> 根据国际标准IEEE（电气和电子工程协会） 754，任意一个二进制浮点数 V 可以表示成下面的形式:
+> 
+> - (-1)^S * M * 2^E
+> 
+> - (-1)^s 表示符号位，当s=0，V为正数；当s=1，V为负数
+> 
+> - M 表示有效数字，大于等于1，小于2
+> 
+> - 2^E, E 表示指数
+> 
+> 示例：
+> 
+> 1. 十进制的5.0，写成二进制是101.0 ，相当于1.01×2^2; S=0, M=1.01, E=2
+> 2. 十进制的-5.0，写成二进制是-101.0 ，相当于-1.01×2^2; S=1, M=1.01, E=2
+> 
+> IEEE 754 规定：
+> 
+> 1. 对于 32 位的浮点数，最高的1位是符号位 S，接着的 8 位是指数E，剩下的 23 位为有效数字M
+> 2. 对于 64 位的浮点数，最高的1位是符号位 S，接着的 11 位是指数E，剩下的 52 位为有效数字M
+> ![](../Storage%26Variable/float_type.png)
+> ![](../Storage%26Variable/float_type_64bit.png)
 
 - 构造类型
   - 数组类型
