@@ -16,11 +16,12 @@ int main()
     }
 
     //方法二
-    // while(num)
-    // {
-    //     count++;
-    //     num = num&(num-1);
-    // }  
+    while(num)
+    {
+        num = num&(num-1);
+        count++;
+    }  
+    //
 
     printf("num二进制中1的个数 = %d\n",count);
 

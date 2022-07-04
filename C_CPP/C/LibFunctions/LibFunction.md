@@ -8,6 +8,9 @@
 
 ### int printf()
 - 返回 int 型 输入字符的个数；
+- printf("%s", arr), %s输出内容仍然是直到遇到'\0'停止打印
+- printf("%s",arr), arr必须是字符串的地址
+- printf("%d\n",b), b在内存中的补码作为有符号整型，打印出b的原码展示
 ```C
 	printf("%d", printf("%d", printf("%d", 43)));
 	       //1           //2        //43     
@@ -130,10 +133,6 @@ int main()
 - "" 包裹的字符串数组必须使用系统函数 strcpy() 进行操作, 使用下标操作数组的方法不适用，函数包含在 string.h 头文件中
 - char* strcpy(char* destination, const char* source) ，本文件夹下. c 文件可参考
 - 直到遇到'\0'停止运行，复制的是'\0'之前可以显示的字符
-
-### printf
-- printf("%s", arr),%s输出内容仍然是直到遇到'\0'停止打印
-- printf("%d\n",b),使用的是b的原码
 
 ### strcmp()
 - 比较两个字符串是否相等

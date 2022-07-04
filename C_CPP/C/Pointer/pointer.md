@@ -10,7 +10,7 @@
 定义指针变量时，使用 *var，说明: 该var变量是指针变量，不是普通变量，var赋值的内容是变量地址；
 使用指针变量时，*var表示：读取var所保存变量地址指向的存储空间内容；
 ```
-![](./pointer_define.png)
+![](../Pointer/pointer_define.png)
 
 ### 指针类型的意义：
 - 指针类型决定了指针 * 解引用操作能访问几个字节
@@ -25,13 +25,16 @@
   - double* p; p+1 增加一个double 浮点型（本质是加8个地址，移动8个字节）
 
 ### 指针变量详解
+
 - 指针变量类型：自身的类型、指向的类型
-- 自身的类型：在指针变量定义的时候，将变量名涂黑，剩下啥类型 指针变量就是啥类型
+- **自身的类型**：在指针变量定义的时候，将变量名涂黑，剩下啥类型 指针变量就是啥类型
 
 ```C
 int *p, p 自身类型是int *
 ```
-- 指向的类型：在指针定义的时候，将变量名和离他最近的*一起涂黑，剩下啥类型，指针变量指向的类型就是啥类型
+
+- 指向的类型：在指针定义的时候，将变量名和离他最近的 * 一起涂黑，剩下啥类型，指针变量指向的类型就是啥类型
+- 
 ```C
   int ***p，自身类型是int ***,指向类型是int **
    作用：决定了指针变量+1跳过的单位跨度；
@@ -42,8 +45,8 @@ e.g.
            1、char *p, p指向char类型，因为char类型是1byte,则p+1跳过单位跨度为1byte
             
            2、int num = 0x44332211; //小端存储 11223344；
-              char *p = &num //char *p; p = &num; p 是char *类型，*p = 11
-              printf("*p = %#x\n",*p); //输出结果为*p = 0x11
+              char *p = &num //char *p; p = &num; p 是char *类型，*p = 0x11
+              printf("*p = %#x\n",*p); //int -> char 强制转换，输出结果为*p = 0x11
               *p = 0; // *p位置的值置0 ，小端存储 00223344
               printf("*p = %#x\n",*p);   //输出结果为*p = 0x00
               printf("num = %#x\n",num); //输出结果为num = 0x44332200,因为char *p指向类型是
@@ -65,58 +68,20 @@ printf("*p5 = %#x\n", *p5); // 起始地址指向03的地址，1次读取一个s
 ```
 ![](../Pointer/pointer_variable1.png)
 
-```C
-/////////////////////////
-/////类型强制转换/////////
-/////////////////////////
-
-int main()
-{
-	int arr[] = { 1, 2, 3, 4, 5 }; //arr数组地址为0x005ffe68, arr[0] 用16进制表示, 小端存储, 为0x01000000, 4个字节
-	                               // arr[1] = 0x02000000
-	short* p = (short*)arr; //强制转换为 short*类型指针, p指针存储 short 类型 arr 数组地址0x005ffe68, 在该地址上操作存储的值
-	int i = 0;
-	for (i = 0; i < 4; i++)  
-	{
-		*(p + i) = 0; //i = 0, 第一次操作arr[0] 中0100；
-                  //i = 1, 第二次操作arr[0] 中0000；
-                  //i = 2, 第三次操作arr[1] 中0200
-	}
-
-	for (i = 0; i < 5; i++)
-	{
-		printf("%d ", arr[i]);
-	}
-	return 0;
-}
-```
-- 类型强制转换 操作过程
-
-arr数组地址及其存储的值
-
-![arr数组地址及其存储的值](./force_switch.png)
-
-p指针地址指向arr数组的地址，第一次操作，01变为00
-
-![p指针地址指向arr数组的地址，第一次操作](./force_switch1.png)
-
-p指针地址指向arr数组的地址，第三次操作,02变为00
-
-![p指针地址指向arr数组的地址，第三次操作](./force_switch2.png)
 
 ### 野指针
 - 指针未初始化
-![](./pointer_NoInitialize.png)
+![](../Pointer/pointer_NoInitialize.png)
 - 解决方法：
   - 当不知道初始化什么值时，可以使用NULL
-  - ![](./pointer_NoInitialize1.png)
+  - ![](../Pointer/pointer_NoInitialize1.png)
 - 指针越界访问
-  - ![](./pointer_NoInitialize2.png)
+  - ![](../Pointer/pointer_NoInitialize2.png)
 - 指针指向的空间释放
 ```C
 示例：test()函数作用完后将地址指向的空间释放，当前*p=20的操作，虽然指向地址没变，但是指向地址的空间已经不是test()函数作用的空间了
 ```
-  - ![](./pointer_NoInitialize3.png)
+  - ![](../Pointer/pointer_NoInitialize3.png)
 
 ### 指针使用-注意事项
 - 使用之前检查有效性
@@ -129,28 +94,136 @@ p指针地址指向arr数组的地址，第三次操作,02变为00
 - 指针p+=1也表示p = p+1
 - 指针p+=2 表示p = p+2
 - p-=2也是同理
-- ![](./pointer_operator.png)
-- ![](./pointer_operator1.png)
+- ![](../Pointer/pointer_operator.png)
+- ![](../Pointer/pointer_operator1.png)
 
 ### 指针 - 指针
 - 指向同一个内存空间的两个指针相减，得到的结果是两个指针之间的元素个数，下图中//err注释部分即为错误写法
-- ![](./pointer_operator2.png)
+- ![](../Pointer/pointer_operator2.png)
 
 ### 指针的关系运算
 
-![](./pointer_compare1.png)
+![](../Pointer/pointer_compare1.png)
 
-![](./pointer_compare2.png)
+![](../Pointer/pointer_compare2.png)
 
 以上两种代码方式，优先选择第一种，实际在绝大部分的编译器上是可以顺利完成任务的，然而我们还是应该避免这样写，因为第二种写法C标准并不保证它可行。
 
 - 标准规定：
 允许指向数组元素的指针与指向数组最后一个元素后面的那个内存位置的指针比较，但是不允许与指向第一个元素之前的那个内存位置的指针进行比较
 
-![](./pointer_compare3.png)
+![](../Pointer/pointer_compare3.png)
+
+### 二级指针
+- 指针变量也是变量，是变量就有地址，那指针变量的地址存放在哪里？这就是二级指针
+- 每级指针通过读取地址，依次访问地址对应的上级的值
+
+![](../Pointer/sec_grade_pointer.png)
+
+
+### 字符指针
+- char* pa = "abcdef"; // "abcdef"是常量字符串，指针 pa 中存放的地址是常量字符串首元素 a 的地址
+- \*pa = 'A'; err, 因为 指针 pa 中存放的是常量字符串的地址，*pa操作无法修改**常量字符串**
+- 为防止 *pa 被修改，定义时可以这样写: const char* pa = "abcdef";
+- 虽然str1 和str2 两个数组存放的内容相同，但是在内存中是分别开辟两个空间，因为不同数组名代表不同的数组地址
+- 因为字符串常量只可以使用、无法被修改，str3 和str4 存放的两个字符串常量首元素地址相同，在内存中是同一份存在
+
+```C
+
+// 例1
+int main()
+{
+	char ch = 'a'; 
+	char* p = &ch; 
+	*p = 'd'; // *取值 对指针赋值
+	printf("%c\n", ch); // 输出d
+
+	char arr[] = "hello C world"; 
+	char* pc = arr;
+
+	char* pa = "abcdef"; //"abcdef"是常量字符串，指针 pa 中存放的地址是常量字符串首元素 a 的地址
+	printf("%c\n", *pa); // 打印a
+	printf("%s\n", pa); // 打印abcdef
+
+	// *pa = 'A'; // err
+	              // 因为 指针pa中存放的是常量字符串的地址，*pa操作无法修改 常量字符串
+	// 为防止 *pa 被修改，定义时可以这样写
+	// const char* pa = "abcdef";
+	printf("%s\n", pa);
+
+	printf("%s\n", arr);
+	printf("%s\n", pc); // arr pc 打印结果都是 hello C world
+	printf("%c\n", *pc);//打印h,说明字符串数组名是首元素地址
+	
+	return 0;
+}
+
+// 例2
+int main()
+{
+	char str1[] = "hello";
+	char str2[] = "hello";
+	// 数组中存放形式为：str[] = {'h','e','l','l','o',\0}; 虽然str1 和str2 两个数组存放的内容相同，但是在内存中是分别开辟两个空间，因为不同数组名代表不同的数组地址
+
+	/*char* str3 = "hello";
+	char* str4 = "hello";*/
+
+	// const 修饰的*str 更加健壮，防止*str 被修改发生segmentfault 错误而不提示
+	const char* str3 = "hello";
+	const char* str4 = "hello";
+	// 指针str3 和str4中存放的是字符串常量首元素 h 的地址，因为字符串常量只可以使用、无法被修改，str3 和str4 存放的两个字符串常量首元素地址相同，在内存中是同一份存在
+
+
+	if (str1 == str2)
+		printf("str1 and str2 are same\n");
+	else
+		printf("str1 and str2 are not same\n"); // 打印
+	
+	if (str3 == str4)
+		printf("str3 and str4 are same\n"); // 打印
+	else
+		printf("str3 and str4 are not same\n");
+
+	return 0;
+}
+
+```
+
+
+### 指针数组
+
+[指针数组参考](../Array/array.md/#指针数组)
+
+- 主要应用方向
+
+```C
+
+// 指针数组,高级用法1
+int main()
+{
+	int arr1[] = { 1,2,3,4,5 };
+	int arr2[] = { 2,3,4,5,6 };
+	int arr3[] = { 3,4,5,6,7 };
+
+	int* parr[] = { arr1, arr2, arr3 }; // 高级用法1
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			printf("%d ", *(parr[i] + j));
+		}
+		printf("\n");
+	}
+
+	return 0;
+}
+
+```
 
 ### 数组指针
-- 区分[指针数组](../Array/array.md/#指针数组)
+- 是指针，指向数组的指针，用来存放数组地址
+- 
+
 - 差异：
   - 指针：存放一个地址，或者数组中某个元素的地址，或者数组名代表的数组首地址
   - 数组：一类元素的集合
@@ -165,9 +238,3 @@ p指针地址指向arr数组的地址，第三次操作,02变为00
 
 ![](../Array/array_name1.png)
 ![](../Array/array_name2.png)
-
-### 二级指针
-- 指针变量也是变量，是变量就有地址，那指针变量的地址存放在哪里？这就是二级指针
-- 每级指针通过读取地址，依次访问地址对应的上级的值
-
-![](./sec_grade_pointer.png)

@@ -41,6 +41,9 @@
 | 10 | \n |
 
 ### 打印控制字符
+
+[printf 函数](../LibFunctions/LibFunction.md/#int-printf)
+
 - 用于浮点数的格式说明符的一般形式是：
 
 %[width][.precision][modifier]f
@@ -63,7 +66,7 @@ printf("A %8.2f plank foot can be cut into %5.0f pieces %6.2f feet long.\n",plan
 | 控制符 | 说明 |
 | %x（或 %X 或 %#x 或 %#X） | 以十六进制形式输出整数，这个很重要 |
 | %c | 输出一个字符 |
-| %s | 用来输出字符串 |
+| %s | 用来输出字符串，传入参数必须为字符串地址 |
 | %p | 输出指针地址 |
 | %d | 按十进制整型数据的实际长度输出（signed)|
 | %.mf | 输出实数时小数点后保留 m 位 |
