@@ -189,7 +189,6 @@ int main()
 
 ```
 
-
 ### 指针数组
 
 [指针数组参考](../Array/array.md/#指针数组)
@@ -238,3 +237,30 @@ int main()
 
 ![](../Array/array_name1.png)
 ![](../Array/array_name2.png)
+
+
+### 指针传参
+
+[指针作为函数参数](../Array/array.md/#数组作为函数参数)
+
+- 二级指针传参
+
+```C
+
+void test(int** ptr)
+{
+	printf("num = %d\n", **ptr);
+}
+int main()
+{
+	int n = 10;
+	int* p = &n;
+
+	int** pp = &p; // 二级指针 存放一级指针的地址
+	test(pp);
+	test(&p);
+
+	return 0;
+}
+
+```
