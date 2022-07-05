@@ -239,6 +239,48 @@ int main()
 ![](../Array/array_name2.png)
 
 
+### 函数指针
+
+[函数的定义](../Functions/functions.md/#函数的定义)
+
+return_type function_name( define_parameter1_type parameter1, ...)
+
+- 定义：指向函数的指针 - 存放函数地址的一个指针
+- &函数名 和 函数名 都是函数的地址；不同于 &数组名 和 数组首元素地址中 +1 移动地址的差异性
+- int Add(int a, int b)是函数名，如何将 Add 赋值到一个指针pf, 该指针类型是 函数指针
+  - int* pf(int a, int b) = Add; ()的优先级高于*，pf 先与()结合成了函数，不合理
+  - int(*pf)(int a, int b) = Add; 此时 pf 是指针，指向函数类型 int (int a, int b, ...) 的指针，存放int (int a, int b, ...)函数类型的函数地址
+
+```C
+
+int Add(int a, int b)
+{
+	return a + b;
+
+}
+
+void Print(char* str)
+{
+	printf("%s\n",str);
+}
+
+int main()
+{
+	printf("%p\n", Add);
+	printf("%p\n", &Add); //%p 打印的 &Add 和 Add 相同
+	
+	int (*p)(int a, int b) = Add;
+	printf("%d\n", (*p)(3, 4));
+	
+	void (*p1)(char* str) = Print; 
+	(*p1) ("hello bit"); // p1 中存放的是 函数指针，*p1 拿到函数名，直接调用字符串数组，打印为：hello bit
+
+
+	return 0;
+}
+
+```
+
 ### 指针传参
 
 [指针作为函数参数](../Array/array.md/#数组作为函数参数)
@@ -247,18 +289,23 @@ int main()
 
 ```C
 
-void test(int** ptr)
+void test(int** ptr) // ptr 可以接受一级指针的地址；二级指针；指针数组
 {
 	printf("num = %d\n", **ptr);
 }
+
 int main()
 {
 	int n = 10;
 	int* p = &n;
+	int* arr[10] ={0};
+
 
 	int** pp = &p; // 二级指针 存放一级指针的地址
 	test(pp);
 	test(&p);
+	test(arr);
+
 
 	return 0;
 }

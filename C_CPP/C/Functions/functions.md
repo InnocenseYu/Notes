@@ -2,22 +2,29 @@
 
 ### 函数的声明
 - 在函数声明中，参数的名称parameter1并不重要，只有参数的类型define_type是必需的；
-- 函数声明结构: return_type function_name( define_type parameter1,* );
+- 函数声明结构: return_type function_name( define_type parameter1, ...);
 - 函数的声明一般出现在函数的使用之前。既满足先声明后使用
 - 函数的定义是指函数的具体实现，交待函数的一个功能实现
 - 函数的声明和定义可以一起设置，也可以先声明，用";"结束，函数定义没有";"
+
+### 函数的定义
+
 ```C
+
 //函数定义：区别函数声明
 
-return_type function_name( define_type parameter1,* )
+return_type function_name( define_type parameter1, ...)
 {
     statement; //语句项
 }
 
-//return_type 返回类型
-//function_name 函数名
-//define_type 定义类型
-//parameter1 函数形式参数1，在函数体中-语句项 中可以直接使用
+// return_type 返回类型
+// function_name 函数名
+// ()包裹的形参
+// define_type 定义类型
+// parameter1 函数形式参数1，在函数体中-语句项 中可以直接使用
+// ... 其他形参
+
 ```
 - 工程项目时，函数声明一般放在头文件(.h)中，包含在 main主函数中
 - 功能函数单独一个.c文件同main函数放在一起，都位于source文件夹

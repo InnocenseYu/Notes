@@ -67,7 +67,7 @@ printf("A %8.2f plank foot can be cut into %5.0f pieces %6.2f feet long.\n",plan
 | %x（或 %X 或 %#x 或 %#X） | 以十六进制形式输出整数，这个很重要 |
 | %c | 输出一个字符 |
 | %s | 用来输出字符串，传入参数必须为字符串地址 |
-| %p | 输出指针地址 |
+| %p | 输出一个指针(地址) |
 | %d | 按十进制整型数据的实际长度输出（signed)|
 | %.mf | 输出实数时小数点后保留 m 位 |
 | %u | 输出十进制无符号整型（unsigned） |

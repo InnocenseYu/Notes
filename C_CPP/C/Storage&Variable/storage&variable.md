@@ -228,10 +228,11 @@ int main()
   - 枚举类型 enum
   - 联合类型 union
 - 指针类型
-  - void* fun
   - int* p
   - char* p
   - float* p
+  - int (*p)[5] // 数组指针 - 指向数组类型 int [5] 的指针
+  - int (*p)(int a, int b, ...) // 函数指针 - 指向函数类型 int (int a, int b, ...) 的指针
 - 空类型 无返回值
   - void: 函数返回类型
     - void func()
