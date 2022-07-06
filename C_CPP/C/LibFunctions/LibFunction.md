@@ -174,3 +174,5 @@ int main()
 ### sqrt(n)
 - 对 n 开根号
 - 包含头文件 math.h
+
+

@@ -240,13 +240,10 @@ int main()
     - void func(void)
 
 ### 类型重命名: typedef 关键字
-- 使用方法：typedef 类型定义 类型重定义
-  - typedef unsigned int u_int;
-  - e.g: unsigned int a = 10;等价于 u_int a = 10;
+[typedef](../KeyWord/keyword.md/#typedef-类型重命名)
 
-### 宏定义
-- #define MAX(X,Y) (X>Y?X:Y)
-- 使用 MAX(X,Y) 替换 (X>Y?X:Y)
+### 宏定义 define
+[宏定义 define](../KeyWord/keyword.md/#define-宏定义)
 
 ### 变量生命周期
 
