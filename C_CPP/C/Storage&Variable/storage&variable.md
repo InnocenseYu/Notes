@@ -228,6 +228,7 @@ int main()
   - 枚举类型 enum
   - 联合类型 union
 - 指针类型
+  - void* p
   - int* p
   - char* p
   - float* p
