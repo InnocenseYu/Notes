@@ -355,7 +355,43 @@ int main()
 
 ```C
 
+// 直接将相同类型的函数名存放到函数指针数组中
+void test()
+{
+	int a = 0;
+	int b = 0;
+	int func = 0;
+	int (*fpA[5])(int, int) = { 0, Plus, Minu, Times, Div };
 
+	do {
+		menu();
+		int sum = 0;
+		printf("please chose:>");
+		scanf("%d", &func);
+		if (func >= 1 && func <= 4)
+		{
+			printf("please input2 numbers:>");
+			scanf("%d%d", &a, &b);
+
+			while (b != 0)
+			{
+				sum = fpA[func](a, b); // 函数指针数组中调用函数并传参
+				printf("%d\n", sum);
+				break;
+			}
+		}
+		else if (0 == func)
+		{
+			printf("exit!");
+			break;
+		}
+		else
+		{
+			printf("wrong,please try again\n");
+		}
+
+	} while (func);
+}
 
 ```
 
