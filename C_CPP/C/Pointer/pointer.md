@@ -264,6 +264,18 @@ return_type function_name( define_parameter1_type parameter1, ...)
 - int Add(int a, int b)是函数名，如何将 Add 赋值到一个指针pf, 该指针类型是 函数指针
   - int* pf(int a, int b) = Add; ()的优先级高于*，pf 先与()结合成了函数，不合理
   - int(*pf)(int a, int b) = Add; 此时 pf 是指针，指向函数类型 int (int a, int b, ...) 的指针，存放int (int a, int b, ...)函数类型的函数地址
+- 函数指针是否使用 * **解引用**，最终操作结果无影响
+
+```C
+
+printf("%d\n", (*p)(3, 4));
+printf("%d\n", p(3, 4)); // 因为 Add是函数名 也是地址，Add 传给指针p, p中存放的也是Add 函数的地址，所以不用加* 也可以使用
+
+printf("%d\n", (**p)(3, 4));
+printf("%d\n", (***p)(3, 4));
+// 以上四种方式打印的结果都相同，后面两种 (**p)(3, 4)、(***p)(3, 4)也没有错，但是不建议使用，加* 多此一举
+
+```
 
 ```C
 
@@ -391,6 +403,56 @@ void test()
 		}
 
 	} while (func);
+}
+
+```
+### 指向函数指针数组的指针-函数指针数组指针
+
+- 函数指针数组指针 是一个指针，指向函数指针数组，数组中每个元素是函数指针
+- int (*)(int, int) - 函数指针
+- int(*arr[])(int,int) - 函数指针数组
+- int(\*(\*arr)[]))(int,int) - (*arr)[] 数组指针
+
+
+### 回调函数
+- 定义：把函数的指针（地址）作为参数传递给另一个函数，当这个指针被用来调用其所指向的函数时，我们就说这是回调函数
+
+```C
+
+// 回调函数
+void Clc(int(*fp)(int,int)) // 定义函数指针，传入函数地址调用函数
+{
+	int x, y;
+	int ret = 0;
+	printf("输入操作数：");
+	scanf("%d %d", &x, &y);
+	ret = fp(x, y);
+	printf("ret = %d\n", ret);
+}
+
+
+// 语句中多次重复的语句和不同函数的调用 改写，使用回调函数 Clc 即可表达含义 
+switch (input)
+{
+case 1:
+	/*printf("输入操作数：");
+	scanf("%d %d", &x, &y);
+	ret = Add(x, y);
+	printf("ret = %d\n", ret);*/
+
+	Clc(Add); // 传入 Add 函数
+	break;
+case 2:
+	/*printf("输入操作数：");
+	scanf("%d %d", &x, &y);
+	ret = Minu(x, y);
+	printf("ret = %d\n", ret);*/
+
+	Clc(Minu); // 传入 Minu 函数
+	break;
+default:
+	printf("选择错误\n");
+	break;
 }
 
 ```
