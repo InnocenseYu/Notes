@@ -189,6 +189,35 @@ int main()
 
 ```
 
+### 结构体指针
+
+- struct 标记 / 结构名* 结构变量;
+  - 定义结构体指针，结构变量自身类型为 struct 标记 / 结构名*，指针指向类型为 struct 标记 / 结构名
+  - 访问结构体内部变量
+    - 结构体变量 sb. 成员 
+    - 结构体指针变量 sp-> 成员
+
+```C
+void print2(struct T* tmp) // 结构体 传地址 比 传实参更加高效
+{
+	printf("%s\n", tmp->ch);  // hehe
+	printf("%s\n", tmp->s.arr); // hello world
+	printf("%lf\n", tmp->s.d); // 3.14
+	printf("%s", tmp->p); // hello bit，换行
+}
+
+int main()
+{
+	char arr[] = "hello bit\n"; // hello bit 换行
+	struct T t = { "hehe", {100, 'w', "hello world", 3.14}, arr }; // 初始化时，使用{}包裹，结构体中 结构体初始化仍然使用{}包裹
+  
+  print2(&t);
+
+	return 0;
+}
+
+```
+
 ### 指针数组
 
 [指针数组参考](../Array/array.md/#指针数组)
@@ -310,7 +339,6 @@ int main()
 
 	return 0;
 }
-
 
 // 示例2
 

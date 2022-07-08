@@ -8,18 +8,23 @@
 
 [typedef 结构体](../Structure/structure.md/#typedef-类型重定义)
 
+#### typedef 类型重命名 常规方式
+
 ```C
+// 通常 类型在中间，重命名的类型别名 在最后
 
 typedef unsigned int uint;
 uint a = 10; 
 // 等价于 unsigned int a = 10; 
 
-typedef unsigned int uint; // （通常）类型在中间，重命名的类型别名 在最后
+```
 
-// 以下 typedef 类型重命名 类型别名 不在最后 
+#### typedef 类型重命名 类型别名不在最后
+
+```C
 typedef int(ArrayType)[10]; // 优先级 () > [], 类型别名为 ArrayType
-ArrayType array = { 0 };
-// 与 int array[10] = {0}; 作用相同
+ArrayType array = { 0 }; // 与 int array[10] = {0}; 作用相同
+
 
 typedef int* PointerArray[10]; // 优先级 [] > *, 指针数组类型, 别名为 PointerArray
 
