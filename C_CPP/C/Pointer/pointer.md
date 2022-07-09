@@ -445,6 +445,9 @@ void test()
 ### 回调函数
 - 定义：把函数的指针（地址）作为参数传递给另一个函数，当这个指针被用来调用其所指向的函数时，我们就说这是回调函数
 
+
+- 回调函数 示例1
+- 
 ```C
 
 // 回调函数
@@ -484,6 +487,52 @@ default:
 }
 
 ```
+
+- 回调函数 示例2：库函数 qsort-快速排序算法 (quick sort)
+
+```C
+
+void qsort( void \*ptr, size_t count, size_t size, int (*comp)(const void *, const void *)) 
+
+```
+
+```C
+
+// int (*comp)(const void *, const void *)
+int compare_chars(const void* q1, const void* q2) // 快速排序算法，q1 q2 是库函数内部调用的，当前函数只需要比较两个无类型值大小即可
+{
+	       // 字符串比较不能用 < = > 符号
+	return strcmp((char*)q1, (char*)q2); // void* 无类型指针 -> char* 字符指针的强制转换，接受的是指针，不需要解引用
+	
+	/*if (*((int*)q1) > * ((int*)q2))
+		return 1;
+	else if (*((char*)q1) == *((char*)q2))
+		return 0;
+	else
+		return - 1;*/
+}
+
+void test()
+{
+	char str[] = "nmlkjihgfedcba";
+	int size = strlen(str);
+
+	qsort(str, size, sizeof(char), compare_chars); // quick sort
+	printf("%s", str);
+
+}
+
+int main()
+{
+	test();
+}
+
+
+```
+
+- 如何写一个多类型可用的冒泡排序(bubble sort)算法 bsort()
+
+
 
 ### 指针传参
 

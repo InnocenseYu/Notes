@@ -177,3 +177,21 @@ int main()
 - 包含头文件 math.h
 
 
+### qsort-多类型参数快速排序
+
+```C
+void qsort( void \*ptr, size_t count, size_t size, int (*comp)(const void *, const void *))
+
+ptr	-	指针指向要排序的数组
+
+count	-	数组的元素个数: sz = sizeof(ptr)/sizeof(ptr[0])
+
+size	-	数组中元素的大小(byte): sizeof(ptr[0])
+
+comp	-	函数指针参数：int cmp(const void *a, const void *b)
+返回类型：整型常量，
+  负数   *a < *b 
+  0      *a = *b 
+  正数   *a > *b 
+
+```
