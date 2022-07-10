@@ -525,6 +525,18 @@ int cmp_ints(const void* q1, const void* q2) // 快速排序算法，q1 q2 是�
 }
 
 
+int cmp_struct_age(const void* q1, const void* q2) // 快速排序算法，q1 q2 是库函数内部调用的，当前函数只需要比较两个无类型值大小即可
+{
+	
+
+	if (((struct Stu*)q1)->age > ((struct Stu*)q2)->age) // 使用 -> 指针访问结构体内部，可以直接拿到值，无需解引用
+		return 1;
+	else if (((struct Stu*)q1)->age == ((struct Stu*)q2)->age)
+		return 0;
+	else
+		return - 1;
+}
+
 void test_qchars()
 {
 	char str[] = "nmlkjihgfedcba";
@@ -545,6 +557,25 @@ void test_bchars()
 
 }
 
+struct Stu 
+	{
+		char name[5];
+		int age;
+	}
+
+void test_bstruct_age()
+{
+	struct Stu s[3] = {{"liming",18},{"xiaohong",22},{"xiaozhang",20}};
+	int size = sizeof(s)/sizeof(s[0]);
+
+	bsort(str, size, sizeof(s[0]), cmp_struct_age); // bubble_sort
+	
+	for(int i=0;i<3;i++)
+	{
+		printf("%d ", s[i].age);
+	}
+	
+}
 
 int main()
 {
