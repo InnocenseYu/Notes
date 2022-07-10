@@ -342,7 +342,7 @@ int main()
 
 // 示例2
 
-// 2-1
+// 2-1 功能：将 地址0 强制类型转化 函数指针，并调用该(地址为0)函数
 (*(void(*)())0)();     // void(*)() - 返回类型为void 、无形参的函数指针类型；
 					   // *(void(*)())0 - () 的优先级高于 *，*(void (*)()) 函数地址的解引用取得函数名不会执行，先执行(void (*)())0
 					   // (void(*)())0 - 0 默认是int 型，使用函数指针类型 void (*)() 强制类型转化 0 为一个函数的地址，该函数 是无返回值、无形参的
@@ -499,7 +499,7 @@ void qsort( void \*ptr, size_t count, size_t size, int (*comp)(const void *, con
 ```C
 
 // int (*comp)(const void *, const void *)
-int compare_chars(const void* q1, const void* q2) // 快速排序算法，q1 q2 是库函数内部调用的，当前函数只需要比较两个无类型值大小即可
+int cmp_chars(const void* q1, const void* q2) // 快速排序算法，q1 q2 是库函数内部调用的，当前函数只需要比较两个无类型值大小即可
 {
 	       // 字符串比较不能用 < = > 符号
 	return strcmp((char*)q1, (char*)q2); // void* 无类型指针 -> char* 字符指针的强制转换，接受的是指针，不需要解引用
@@ -512,19 +512,45 @@ int compare_chars(const void* q1, const void* q2) // 快速排序算法，q1 q2 
 		return - 1;*/
 }
 
-void test()
+
+int cmp_ints(const void* q1, const void* q2) // 快速排序算法，q1 q2 是库函数内部调用的，当前函数只需要比较两个无类型值大小即可
+{
+	// 字符串比较不能用 < = > 符号
+	if (*(int*)q1 > *(int*)q2)
+		return 1;
+	else if (*(char*)q1 == *(char*)q2)
+		return 0;
+	else
+		return - 1;
+}
+
+
+void test_qchars()
 {
 	char str[] = "nmlkjihgfedcba";
 	int size = strlen(str);
 
-	qsort(str, size, sizeof(char), compare_chars); // quick sort
+	qsort(str, size, sizeof(char), cmp_chars); // quick sort
 	printf("%s", str);
 
 }
 
+void test_bchars()
+{
+	char str[] = "abcdefghijklkmn";
+	int size = strlen(str);
+
+	bsort(str, size, sizeof(char), cmp_chars); // bubble_sort
+	printf("%s", str);
+
+}
+
+
 int main()
 {
-	test();
+	test_qchars();
+
+	test_bchars();
 }
 
 
@@ -532,7 +558,46 @@ int main()
 
 - 如何写一个多类型可用的冒泡排序(bubble sort)算法 bsort()
 
+```C
 
+void bsort(void* arr, int size, int width, int (*cmp)(void* b1, void* b2))
+{
+	for (int i = 0; i < size - 1; i++)
+	{
+		for (int j = 0; j < size - 1 - i; j++)
+		{
+			char* p1 = (char*)arr + j * width;
+			char* p2 = (char*)arr + (j + 1) * width; //之所以都强制转换为char* 操作，因为arr的类型可以是 int char short double等，都可以转化为char 一个字节进行操作
+			
+			if (cmp(p1,p2)>0) // 升序
+			// if(cmp((char*)arr + j * width, (char*)arr + (j + 1) * width))
+				// void* 指针可以接受任意类型指针，char* 指针 p1((char*)arr + j * width) 传给形参 无类型指针 void* b1，此时 b1 需要先强制类型转化才能进行 + - 指针操作，* 解引用操作 
+
+				// 数组类型比较方式 *(arr+j) > *(arr+j+1) 
+				// 字符串的比较需要使用 strcmp()
+				// 结构体类型变量获取需要使用 . 或者 ->
+
+				// 所以这里应用设计一个 通用类型 - 函数指针的方法比较合适
+				// 多种变量类型操作和作为形参输入，这里可以使用void* 类型接收
+
+			{
+				// 交换大小值
+				for (int k = 0; k < width; k++) // 逐字节交换，不是类似int a[] = {1,3,4};a[0] = a[1], 按造元素进行交换的
+				{
+					char tmp = *p1;
+					*p1 = *p2;
+					*p2 = tmp;
+					p1++;
+					p2++;
+				}
+
+			}
+			
+		}
+	}
+}
+
+```
 
 ### 指针传参
 
