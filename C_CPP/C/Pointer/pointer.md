@@ -123,10 +123,10 @@ printf("*p5 = %#x\n", *p5); // 起始地址指向03的地址，1次读取一个s
 
 ### 字符指针
 - char* pa = "abcdef"; // "abcdef"是常量字符串，指针 pa 中存放的地址是常量字符串首元素 a 的地址
+- pa+1 得到常量字符串元素 b 的地址，打印 *(pa+1) 结果是 b
 - \*pa = 'A'; err, 因为 指针 pa 中存放的是常量字符串的地址，*pa操作无法修改**常量字符串**
-- 为防止 *pa 被修改，定义时可以这样写: const char* pa = "abcdef";
-- 虽然str1 和str2 两个数组存放的内容相同，但是在内存中是分别开辟两个空间，因为不同数组名代表不同的数组地址
-- 因为字符串常量只可以使用、无法被修改，str3 和str4 存放的两个字符串常量首元素地址相同，在内存中是同一份存在
+- 为防止 *pa 被修改发现不易，定义时可以这样写: const char* pa = "abcdef"; 错误提示更加明显
+- *(pa+i) == pa[i] 它们完全等价，除了数组，字符指针也可以使用
 
 ```C
 
@@ -143,6 +143,8 @@ int main()
 
 	char* pa = "abcdef"; //"abcdef"是常量字符串，指针 pa 中存放的地址是常量字符串首元素 a 的地址
 	printf("%c\n", *pa); // 打印a
+	printf("%c\n", pa[0]); // 打印a，*(pa+i) == pa[i] 除了数组，字符指针也可以使用，它们完全等价
+	printf("%c\n", *(pa+1)); // 打印b
 	printf("%s\n", pa); // 打印abcdef
 
 	// *pa = 'A'; // err
@@ -158,6 +160,13 @@ int main()
 	return 0;
 }
 
+```
+
+- 虽然str1 和str2 两个数组存放的内容相同，但是在内存中是分别开辟两个空间，因为不同数组名代表不同的数组地址
+- 因为字符串常量只可以使用、无法被修改，str3 和str4 存放的两个字符串常量首元素地址相同，在内存中是同一份存在
+
+```C
+
 // 例2
 int main()
 {
@@ -165,8 +174,10 @@ int main()
 	char str2[] = "hello";
 	// 数组中存放形式为：str[] = {'h','e','l','l','o',\0}; 虽然str1 和str2 两个数组存放的内容相同，但是在内存中是分别开辟两个空间，因为不同数组名代表不同的数组地址
 
-	/*char* str3 = "hello";
-	char* str4 = "hello";*/
+	/*
+	char* str3 = "hello";
+	char* str4 = "hello";
+	*/
 
 	// const 修饰的*str 更加健壮，防止*str 被修改发生segmentfault 错误而不提示
 	const char* str3 = "hello";
@@ -672,4 +683,15 @@ int main()
 
 ![](../Pointer/pointer-array-sizeof2.png)
 
+- strlen 只要遇到 \0 就停止，计算的是 \0 之前的长度，\0 也有大小
+- strlen() 入口参数是const char* 类型, strlen(&arr) 中 &arr 的类型是 char(*)[7]，因此会有警告产生，不建议这样使用
+
 ![](../Pointer/pointer-array-strlen.png)
+
+![](../Pointer/pointer-array-sizeof3.png)
+
+![](../Pointer/pointer-array-strlen1.png)
+
+- 字符指针
+
+![](../Pointer/pointer-array-sizeof4.png)

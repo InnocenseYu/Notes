@@ -27,7 +27,7 @@
 - 类似int\* 整形指针; char\* 字符指针，定义及初始化：int* arr[3] = {&a,&b,&c} 即为int 型指针数组，存放一类指针的集合
 - int* arr[10]; arr[10] 数组中元素的自身类型为 int* 指针，则存放的是int 类型地址；指针指向类型为 int;
 
-### 字符串数组
+### 字符数组与指针
 
 - 定义方式：
   - char arr[] = "a string";
@@ -50,6 +50,31 @@
 - **特别注意**：第一种初始化的方式，看似左值是个字符串，其实不然，它其实是个初始化列表。最后列表包含 \0
 - 字符数组是**不接受**将字符串直接**赋值**给它，数组内容是初始化来的
 - 如果想操作字符串数组，可以使用字符串相关函数
+
+[字符指针](../Pointer/pointer.md/#字符指针)
+
+- 定义 char* pa = "abcdef";
+- 
+```C
+
+int main()
+{
+    char *a = "abcdef";
+    printf("%d\n",sizeof(a));        // 4byte a 是地址
+    printf("%d\n",sizeof(a+0));      // 4byte 仍是地址
+    printf("%d\n",sizeof(*a));       // *a 是 a, 类型是 char，大小为 1byte
+    printf("%d\n",sizeof(a+1));      // 4byte b的地址 
+    printf("%d\n",sizeof(a[0]));     // 1byte a[0] == *(a+0) == 'a'
+    printf("%d\n",sizeof(&a));       // 指针的地址仍是地址 4byte
+    printf("%d\n",sizeof(*&a));      // *&a == a, a是一个地址，4byte
+    printf("%d\n",sizeof(&a+1));     // 4byte
+    printf("%d\n",sizeof(&a[0]));    // 4byte
+    printf("%d\n",sizeof(&a[0]+1));  // 指向b的地址，4byte
+
+    return 0;
+}
+
+```
 
 ### 数组的赋值问题
 - [参见scanf函数](../LibFunctions/LibFunction.md/#scanf"10s"name)
