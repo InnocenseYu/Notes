@@ -660,3 +660,16 @@ int main()
 }
 
 ```
+
+
+### 数组-指针的计算
+
+- 整型数组
+
+![](../Pointer/pointer-array-sizeof1.png)
+
+- 字符数组
+
+![](../Pointer/pointer-array-sizeof2.png)
+
+![](../Pointer/pointer-array-strlen.png)
