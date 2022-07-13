@@ -252,6 +252,7 @@ int main()
 
 [指针数组参考](../Array/array.md/#指针数组)
 
+- 数组中元素的值即为存放元素指针的首元素地址
 - 主要应用方向
 
 ```C
@@ -275,6 +276,30 @@ int main()
 
 	return 0;
 }
+
+```
+
+### 指针数组元素的指针-指针的指针
+
+- 指针的指针，类型定义
+  - char* a[] = { "work","at","alibaba" };
+  - char** pa = a; 
+    - \*pa 指 pa是一个指针，char\*\* pa指 pa指针(\*pa)指向类型为char\*
+
+![](../Pointer/pointer-array.png)
+
+```C
+
+int main()
+{
+	char* a[] = { "work","at","alibaba" }; // a 是指针数组，数组内部存放元素类型为char* 指针
+	char** pa = a; // 数组名a为首元素地址，数组内部存放元素类型为char*，那么指向数组内部元素的指针类型为 char**
+	pa++; // pa为指向数组内部元素的指针，pa+1, 向后移动一个元素(即"at")，步长为char*
+	printf("%s\n", *pa); // *pa 拿到数组元素，且数组元素为地址，直接即可被 %s 打印
+
+	return 0;
+}
+
 
 ```
 
