@@ -289,13 +289,40 @@ int main()
 ![](../Pointer/pointer-array.png)
 
 ```C
-
+// 示例1
 int main()
 {
 	char* a[] = { "work","at","alibaba" }; // a 是指针数组，数组内部存放元素类型为char* 指针
 	char** pa = a; // 数组名a为首元素地址，数组内部存放元素类型为char*，那么指向数组内部元素的指针类型为 char**
 	pa++; // pa为指向数组内部元素的指针，pa+1, 向后移动一个元素(即"at")，步长为char*
 	printf("%s\n", *pa); // *pa 拿到数组元素，且数组元素为地址，直接即可被 %s 打印
+
+	return 0;
+}
+
+```
+
+![](../Pointer/pointer-array1.png)
+
+```C
+// 示例2
+int main()
+{
+	char* c[] = { "ENTER","NEW","POINT","FIRST" };
+	char** cp[] = { c + 3,c + 2,c + 1,c };
+	char*** cpp = cp;
+
+	printf("%s\n", **++cpp); // POINT
+	// cpp = cpp+1, 指向 cp 中 c+2 的地址，*(c+2), 拿到 c+2 的值, cp中c+2的值为c中c+2的地址，**(c+2) 拿到c中c+2的值，即为POINT的首元素地址
+
+	printf("%s\n", *-- * ++cpp + 3); // ER
+	// ++cpp即为 cpp = cpp+1, 此时cpp指向 cp 中 c+2 的地址, +1 指向cp中c+1的地址，* ++cpp 取得cp中c+1的地址的值为c+1, c+1指向 C中c+1的地址，--* ++cpp，在C中将c+1的地址上移动一个，得到c的首元素地址，*-- * ++cpp 得到首元素地址指向的值为"ENTER"的首元素地址，*-- * ++cpp + 3 将"ENTER"的首元素地址移动3位得到 ER
+
+	printf("%s\n", *cpp[-2] + 3); // ST
+	// 此时cpp指向 cp 中c+1的地址, cpp[-2] == *(cpp-2), *cpp[-2] + 3 == **(cpp-2)+3,此时cpp上移2位，到达cp中c+3的地址，解引用拿到c+3该值，c+3的值指向c中c+3的地址，再次解引用拿到c中c+3的值为"FIRST"的首地址，+3右移3位，%s打印 ST
+
+	printf("%s\n", cpp[-1][-1] + 1); // EW
+	// *(*(cpp-1)-1)+1，此时cpp指向的值没变，仍为 cp 中c+1的地址， 上移一位，到达cp中c+2的地址，解引用拿到c+2的值，c+2-1=c+1，c+1的值指向c中c+1的地址，解引用拿到c中c+1地址的值为"NEW"的首元素地址，+1向后移动一位，打印 EW
 
 	return 0;
 }
