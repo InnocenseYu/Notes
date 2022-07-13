@@ -57,6 +57,10 @@ for(i = 0; i<3; i++)
 ### sizeof(name)
 - 计算变量、数组、类型的大小，单位是字节，是一种 [运算符](../Operator/operators.md);
 - 返回类型是 size_t，重定义的 unsigned integer 无符号 int;
+- sizeof函数计算大小时，**不会访问括号内部的name，只是计算 name 的类型大小**
+  - 比如int 4byte, char* 4byte, char [5] 1*5byte 等等
+  - int a[5] ={0}; sizeof(a[5])大小是多少？虽然a数组有5个元素，a[5]第六个元素不存在，但是a数组名指向的内部元素类型是int，所以sizeof(a[5])大小是4byte
+
 ```C
 // 示例1
   int i; //全局变不初始化-默认是 0
@@ -79,6 +83,7 @@ for(i = 0; i<3; i++)
 
     return 0;
   }
+
 ```
 
 - 当 name int 型 (4B) 数组, 两个元素时，计算所占空间大小为 4*2=8B;

@@ -76,7 +76,7 @@ printf("*p5 = %#x\n", *p5); // 起始地址指向03的地址，1次读取一个s
   - 当不知道初始化什么值时，可以使用NULL
   - ![](../Pointer/pointer_NoInitialize1.png)
 - 指针越界访问
-  - ![](../Pointer/pointer_NoInitialize2.png)
+  - ![](../Pointer/pointer_NoInitialize2.png
 - 指针指向的空间释放
 ```C
 示例：test()函数作用完后将地址指向的空间释放，当前*p=20的操作，虽然指向地址没变，但是指向地址的空间已经不是test()函数作用的空间了
@@ -112,6 +112,8 @@ printf("*p5 = %#x\n", *p5); // 起始地址指向03的地址，1次读取一个s
 - 标准规定：
 允许指向数组元素的指针与指向数组最后一个元素后面的那个内存位置的指针比较，但是不允许与指向第一个元素之前的那个内存位置的指针进行比较
 
+- 没有越界数组可以访问尾元素+1的地址但是不能访问首元素-1的地址
+
 ![](../Pointer/pointer_compare3.png)
 
 ### 二级指针
@@ -122,11 +124,13 @@ printf("*p5 = %#x\n", *p5); // 起始地址指向03的地址，1次读取一个s
 
 
 ### 字符指针
-- char* pa = "abcdef"; // "abcdef"是常量字符串，指针 pa 中存放的地址是常量字符串首元素 a 的地址
+- char* pa = "abcdef";
+- "abcdef"是常量字符串，指针 pa 中存放的地址是常量字符串首元素 a 的地址, *pa 结果为 'a'
+- 从首地址开始，pa++, 依次指向地址存储的是 {'b','c','d','e','f',\0}
 - pa+1 得到常量字符串元素 b 的地址，打印 *(pa+1) 结果是 b
 - \*pa = 'A'; err, 因为 指针 pa 中存放的是常量字符串的地址，*pa操作无法修改**常量字符串**
 - 为防止 *pa 被修改发现不易，定义时可以这样写: const char* pa = "abcdef"; 错误提示更加明显
-- *(pa+i) == pa[i] 它们完全等价，除了数组，字符指针也可以使用
+- *(pa+i) == pa[i] 它们完全等价，除了数组，字符指针也可以使用，
 
 ```C
 
@@ -209,6 +213,21 @@ int main()
     - 结构体指针变量 sp-> 成员
 
 ```C
+// 结构体指针定义的p1 p2
+struct Test
+{
+	int Num;
+	char* pcName;
+	short sDate;
+	char cha[2];
+	short sBa[4];
+}* p1;
+
+struct Test* p2;
+
+```
+
+```C
 void print2(struct T* tmp) // 结构体 传地址 比 传实参更加高效
 {
 	printf("%s\n", tmp->ch);  // hehe
@@ -277,7 +296,8 @@ int main()
         - 数组中存放的10个元素的类型为 int* 指针；
         - 指针指向 int 类型
       - 数组指针: int (*array)[10], 因为\* 的优先级高于[], 所以使用()提升优先级
-    	- *array 是指针，int [10]是数组类型，无数组名。
+    	- array 是指针，int (*) [10]是数组指针类型，无数组名
+    	- *array 拿到的是数组名，遵从[一维、二维数组名的使用方法](../Array/array.md/#数组名是什么)
         - 含义：指针 array 指向一个大小为10个整型的数组;
         - 用处：二维及以上维度数组arr[3][5]，数组名作为参数使用，数组名 arr 即为二维数组首元素的地址；二维数组 arr[3][5] 是由 3个 一维数组组成, 见下面的练习
 
@@ -669,7 +689,6 @@ int main()
 
 	return 0;
 }
-
 ```
 
 
@@ -690,8 +709,42 @@ int main()
 
 ![](../Pointer/pointer-array-sizeof3.png)
 
+- printf("%d\n",strlen(&arr)); &arr 是数组地址 == arr 数组首元素地址 == &arr[0] 数组首元素地址，但是含义不同。这里 数组地址&arr 变量类型是 char数组指针，被strlen函数强制转化为char指针
+
 ![](../Pointer/pointer-array-strlen1.png)
 
 - 字符指针
 
 ![](../Pointer/pointer-array-sizeof4.png)
+
+![](../Pointer/pointer-array-strlen2.png)
+
+
+### 指针-整数的计算
+
+- 内存中最小的单位是 字节（byte）, 每个字节对应一个地址，每相邻的两个地址间隔一个字节
+- 地址+1，地址增加1，向后移动一个字节
+- ptr1[-1] == *(ptr1+(-1))
+
+![](../Pointer/pointer-int.png)
+
+```C
+
+int main()
+{
+	int a[4] = { 1, 2, 3, 4 };
+	int* ptr1 = (int*)(&a + 1); 
+	// &a+1, 数组地址+1，指针移动到的数组的尾端
+	// ptr1[-1] == *(ptr1+(-1)); ptr1+(-1) 指ptr1指针向左（前）移动一个int型（4字节）
+
+	int* ptr2 = (int*)((int)a + 1); 
+	// (int)a+1 只是地址 数字 +1，地址增加1，移动一个字节
+	// - 因为a被强制转化为类型 int，+1 只是数字 + - 运算，尽管a是int型，也不会移动 4byte
+	// 假设a的地址是 0x00 00 00 05, +1，0x00 00 00 06
+
+	printf("%x,%x", ptr1[-1], *ptr2); //
+
+	return 0;
+}
+
+```
