@@ -75,7 +75,7 @@ void my_strcpy(char* dest, char* src)
 		src++;
 		dest++;
 	}
-	*dest = *src; //copy '\0'
+	*dest = *src; // 弥补剩下的 '\0'
 } 
 
 //代码优化1
@@ -140,15 +140,18 @@ void my_strcpy(char* dest, const char* src)
 //代码优化6  //修改void 为 char* ,给定函数返回值，可以直接作为参数被其他函数调用使用，简称：链式访问，函数内部 return 操作
 char* my_strcpy(char* dest, const char* src) //const 修饰*src，防止src、dest两个地址因前后位置调换*src被操作，进而出现错误
 {
-	char* ret = dest;     //数组起始地址保存
-	assert(src != NULL);  //断言，必须引用头文件 #include <assert.h>，防止野指针、空指针的危害
+	char* ret = dest;     // 提前保存 dest 字符串的起始地址
+	assert(src != NULL);  // 断言，必须引用头文件 #include <assert.h>，防止野指针、空指针的危害
 	assert(dest != NULL);
 
 	while (*dest++ = *src++) //while判断条件为：*src赋值到*dest后的内容是否为真，真的话执行{}
 	{
 	 	;
 	}
-	return ret; //不写成return dest; 因为此时dest地址已经指向字符数组末尾地址，并不能代表数组地址
+
+	return ret; //为什么不写成return dest？
+	// 因为此时dest经过dest++操作，地址已经向后偏移src的strlen+1长度，并不能代表dest的字符地址，需要在操作前提前保存
+
 }
 
 

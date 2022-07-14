@@ -12,7 +12,7 @@
   - 如何看待内存空间的视角
 - 整型（类型大小 存放在 vs 软件 limits.h 头文件中）
   - int 的原型是 signed int, 一般不写signed 默认是有符号整型, 32位系统 int 大小 4byte
-  - 无符号整型 unsigned int a = 2;
+  - 无符号整型 unsigned int a = 2; 两个无符号数 + - 运算结果仍为无符号数 > 0
   - char 类型1byte 8bit, 也可以被singed, unsigned 关键字修饰
   - signed char 与 unsigned char 取值范围(补码 -> 原码 -> 十进制)
     - signed char:(补码)   00000000 00000001 ... 01111111 100000000 10000001 10000010 ... 11111101 1111110 11111111

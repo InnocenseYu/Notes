@@ -146,11 +146,37 @@ int main()
 ### strlen(name)
 - strlen 函数 求字符串的长度, 只能针对字符串，''包裹的单个字符依次使用, 分隔放在 {} 中的字符串在使用 strlen() 函数时，需要在最后一个字符末尾加个'\0'才能使用
 - 直到遇到'\0'停止运行，计算的是'\0'之前可以显示的字符个数
+- 返回类型是 size_t == unsigned int 无符号数，容易犯错
 
 ### strcpy(destination,resource)
 - "" 包裹的字符串数组必须使用系统函数 strcpy() 进行操作, 使用下标操作数组的方法不适用，函数包含在 string.h 头文件中
-- char* strcpy(char* destination, const char* source) ，本文件夹下. c 文件可参考
-- 直到遇到'\0'停止运行，复制的是'\0'之前可以显示的字符
+- char* strcpy(char* destination, const char* source) ，本文件夹下my_strcpy()函数可促进理解
+- 返回类型是char*，值为 dest 的起始地址
+- 复制src字符串数组必须包含'\0'，因为该函数直到遇到'\0'停止运行，但是复制的内容包括'\0'
+- dest 字符串数组空间必须足够大，可操作，不是const 修饰的或者常量字符串
+- 不能操作常量字符串 char* p = "hehe";
+
+### strcat(char* dest, const char* src)
+- 在 dest 字符串数组末端(覆盖dest '\0')增补src字符串的全部的内容，包括src字符串数组的'\0'
+- dest 和 src的字符串必须包含'\0'
+- 返回dest字符串数组的首地址
+- 字符串自己给自己整添因为内存大小问题会崩溃
+
+```C
+// test '\0'
+int main()
+{
+	char arr1[30] = "hello\0xxxxxxxxx"; // 后面的xxxxxxx多于world的字符数，可以查看arr1中x是否被 src 末端'\0'覆盖即可判断'\0'是否被整补过来
+	char arr2[] = "world";
+	strcat(arr1, arr2); 
+	
+	printf("%s\n", arr1);
+	
+	return 0;
+}
+
+```
+
 
 ### strcmp()
 - 两个字符串自左向右逐个字符比较（按ASCII值大小相比较）
