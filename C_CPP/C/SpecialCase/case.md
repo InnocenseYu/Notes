@@ -209,11 +209,11 @@ int num_count(n)
 }
 
 // n^k
-int Pow(int n, int k)
+int Pow(int n, int k) // 5,3
 {
 	if (k > 0)
 	{
-		return n * Pow(n, --k);
+		return n * Pow(n, --k); // 5*Pow(5,2) == 5*5*Pow(5,1) == 5*5*5*1
 	}
 	else if (0 == k)
 	{
@@ -233,8 +233,8 @@ void waterflower(int n)
 		int tmp = i; //一般不改变操作数，容易导致混乱
 		while (tmp)
 		{
-			sum += Pow(tmp % 10, num_count(i)); // n^k
-			tmp /= 10;
+			sum += Pow(tmp % 10, num_count(i)); // 遍历每一位的num_count(i)次方之和
+			tmp /= 10; // 拿到除个位的数之外的十位、百位等
 		}
 
 		if (sum == i)
@@ -253,3 +253,5 @@ int main()
 }
 
 ```
+
+

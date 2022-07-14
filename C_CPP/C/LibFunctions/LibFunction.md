@@ -17,7 +17,7 @@
 ```
 
 
-### scanf("%10s",name)
+### scanf("%10s",*name)
 - name 地址
 - 主要用于以某种标准形式输入的混合类型数据的读取和转换
 - 更主要是获取单词而不是获取字符串，因为字符串中的单词的间隔（空白字符）将会导致函数的结束；
@@ -48,11 +48,24 @@ for(i = 0; i<3; i++)
     }
 ```
 
-### gets(name)
+### gets(*name)
 - name 指针类型
 - 结束条件
   - 直到遇到一个换行字符 "\n" 就会结束，enter 回车键可以产生这个字符
-  - 不同于scanf函数，遇到空格或者有字符宽度的输入限制
+  - 不同于scanf函数，遇到空格或者有字符宽度的输入限制就会结束
+
+
+### int getchar(void)
+- 返回 int 型函数
+- 输入参数无
+- 每次只能接收键盘**一个**输入字符，使用循环语句可以连续输入；
+- getchar()
+  - 结束标志为关键字 EOF
+
+### putchar(ch)
+- 打印 ch 的一个字符
+- 同 printf("%c",ch)
+
 
 ### sizeof(name)
 - 计算变量、数组、类型的大小，单位是字节，是一种 [运算符](../Operator/operators.md);
@@ -154,16 +167,6 @@ int main()
 但是可以用于两个字符数组指针 值 的比较，char* str1[] = NULL; char* str2[] = NULL; *str1 == *str2
 ```
 
-### int getchar(void)
-- 返回 int 型函数
-- 输入参数无
-- 每次只能接收键盘**一个**输入字符，使用循环语句可以连续输入；
-- getchar()
-  - 结束标志为关键字 EOF
-
-### putchar(ch)
-- 打印 ch 的一个字符
-- 同 printf("%c",ch)
 
 ### Sleep(m_seconds)
 - 按照时间 m_seconds 毫秒 休息一会
