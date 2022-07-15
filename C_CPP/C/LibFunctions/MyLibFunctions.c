@@ -177,7 +177,7 @@ char* my_strcat(char* dst, const char* src)
 	// while(*dst++);
 
 	// 追加src字符串到dst的尾端(覆盖'\0')
-	while(*dst++ = *src++)
+	while(*dst++ = *src++) // *src的'\0'也会被追加过去
 	{
 		;
 	}
@@ -208,3 +208,6 @@ int my_strcmp(const char* str1, const char* str2)
 	return (*(unsigned char*)str1 - *(unsigned char*)str2);
 
 }
+
+
+// 实现my_strncpy my_strncat
