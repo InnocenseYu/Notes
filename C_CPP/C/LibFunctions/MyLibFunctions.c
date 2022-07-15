@@ -144,6 +144,8 @@ char* my_strcpy(char* dest, const char* src) //const 修饰*src，防止src、de
 	assert(src != NULL);  // 断言，必须引用头文件 #include <assert.h>，防止野指针、空指针的危害
 	assert(dest != NULL);
 
+	// assert(*src && *dest)
+
 	while (*dest++ = *src++) //while判断条件为：*src赋值到*dest后的内容是否为真，真的话执行{}
 	{
 	 	;

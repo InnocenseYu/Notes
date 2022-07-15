@@ -153,13 +153,14 @@ int main()
 - char* strcpy(char* destination, const char* source) ，本文件夹下my_strcpy()函数可促进理解
 - 返回类型是char*，值为 dest 的起始地址
 - 复制src字符串数组必须包含'\0'，因为该函数直到遇到'\0'停止运行，但是复制的内容包括'\0'
+  - int src[] = {'a','u','d','i'}; 因为strcpy的停止需要判断src字符串数组的末端'\0'
 - dest 字符串数组空间必须足够大，可操作，不是const 修饰的或者常量字符串
-- 不能操作常量字符串 char* p = "hehe";
+  - 不能操作常量字符串 char* dst = "hehe";
 
 ### strcat(char* dest, const char* src)
 - 在 dest 字符串数组末端(覆盖dest '\0')增补src字符串的全部的内容，包括src字符串数组的'\0'
 - dest 和 src的字符串必须包含'\0'
-- 返回dest字符串数组的首地址
+- 返回dest字符串数组的首地址, 类型 char*
 - 字符串自己给自己整添因为内存大小问题会崩溃
 
 ```C
@@ -229,3 +230,30 @@ comp	-	函数指针参数：int cmp(const void *a, const void *b)
   正数   *a > *b 
 
 ```
+
+
+### assert()
+
+```C
+
+#include "assert.h" 
+void assert( int expression ); // 函数定义
+
+assert(expression); // 函数调用
+
+```
+- assert 宏的原型定义在 assert.h 中
+- assert 的作用是现计算表达式 expression ，如果其值为假（即为 0），那么它先向 stderr 打印一条出错信息，然后通过调用 abort 来终止程序运行
+- assert 只有在 Debug 版本中才有效，如果编译为 Release 版本则被忽略
+- 缺点：频繁的调用会极大的影响程序的性能，增加额外的开销
+- 所以调试结束后，可以通过在包含任意一个 #include 的语句之前插入 #define NDEBUG 来禁用 assert 调用
+  ```C
+  #include <stdio.h>
+  #include <assert.h>
+  #define NDEBUG 
+  #include "stm32f4.h"
+  ```
+- 使用场景：
+  - 函数开始处检验传入参数的合法性
+  - 每次调用 assert函数 一般只检验一个条件，因为同时检验多个条件时，如果断言失败，无法直观的判断是哪个条件失败
+  - 
