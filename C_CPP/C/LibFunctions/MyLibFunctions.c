@@ -141,10 +141,11 @@ void my_strcpy(char* dest, const char* src)
 char* my_strcpy(char* dest, const char* src) //const 修饰*src，防止src、dest两个地址因前后位置调换*src被操作，进而出现错误
 {
 	char* ret = dest;     // 提前保存 dest 字符串的起始地址
-	assert(src != NULL);  // 断言，必须引用头文件 #include <assert.h>，防止野指针、空指针的危害
+	assert(src != NULL);  // 断言，必须引用头文件 #include <assert.h>， 只要 assert 函数内部的**参数表达式返回结果**为**假**，就打印一条出错信息，然后终止程序运行
+	                      // 防止野指针、空指针的危害
 	assert(dest != NULL);
 
-	// assert(*src && *dest)
+	// assert(src && dest) // 也可这样使用，一般不建议多个表达式放在一起，因为不易判断是哪个的问题
 
 	while (*dest++ = *src++) //while判断条件为：*src赋值到*dest后的内容是否为真，真的话执行{}
 	{
@@ -157,5 +158,53 @@ char* my_strcpy(char* dest, const char* src) //const 修饰*src，防止src、de
 }
 
 
-/////////////////////////
-///////
+////////////////////////////////
+///////my_strcat 字符串 追加 ////
+////////////////////////////////
+
+char* my_strcat(char* dst, const char* src)
+{
+	assert(dst && src); // 排除 dst 和 src 中任一个是空指针 NULL(0)
+	
+	char* ret = dst;
+	
+	// 拿到 *dst 中 '\0'的地址  
+	while(*dst)
+	{
+		dst++;
+	}
+
+	// while(*dst++);
+
+	// 追加src字符串到dst的尾端(覆盖'\0')
+	while(*dst++ = *src++)
+	{
+		;
+	}
+
+	return ret;
+
+}
+
+////////////////////////////////
+///////my_strcmp 字符串比较 ////
+////////////////////////////////
+
+int my_strcmp(const char* str1, const char* str2)
+{
+	assert(str1 && str2);
+
+	while(*str1 == *str2)
+	{
+		if(*str1 == '\0')
+		{
+			return 0;
+		}
+
+		str1++;
+		str2++;
+	}
+
+	return (*(unsigned char*)str1 - *(unsigned char*)str2);
+
+}

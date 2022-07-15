@@ -148,7 +148,7 @@ int main()
 - 直到遇到'\0'停止运行，计算的是'\0'之前可以显示的字符个数
 - 返回类型是 size_t == unsigned int 无符号数，容易犯错
 
-### strcpy(destination,resource)
+### char* strcpy(char* dst, char* src)
 - "" 包裹的字符串数组必须使用系统函数 strcpy() 进行操作, 使用下标操作数组的方法不适用，函数包含在 string.h 头文件中
 - char* strcpy(char* destination, const char* source) ，本文件夹下my_strcpy()函数可促进理解
 - 返回类型是char*，值为 dest 的起始地址
@@ -157,7 +157,33 @@ int main()
 - dest 字符串数组空间必须足够大，可操作，不是const 修饰的或者常量字符串
   - 不能操作常量字符串 char* dst = "hehe";
 
-### strcat(char* dest, const char* src)
+### char* strncpy(char* dst, char* src, unsigned int num)
+- 未从 src 中拷贝'\0', num 选择几个就考贝几个
+- 如果src字符串的长度小于num，则拷贝完src字符串之后(不包括'\0')，在目标的后边追加'\0'，直到num个
+
+```C
+
+char* strncpy (
+        char * dest,
+        const char * source,
+        size_t count
+        )
+{
+        char *start = dest;
+
+        while (count && (*dest++ = *source++) != '\0')    /* copy string */
+                count--;
+
+        if (count)                              /* pad out with zeroes */
+                while (--count)
+                        *dest++ = '\0';
+
+        return(start);
+}
+
+```
+
+### char* strcat(char* dest, const char* src)
 - 在 dest 字符串数组末端(覆盖dest '\0')增补src字符串的全部的内容，包括src字符串数组的'\0'
 - dest 和 src的字符串必须包含'\0'
 - 返回dest字符串数组的首地址, 类型 char*
@@ -177,6 +203,11 @@ int main()
 }
 
 ```
+
+
+### char* strcat(char* dest, const char* src, unsigned char num)
+- 在 dest 字符串数组末端(覆盖dest '\0')增补src字符串的num个字符，并且末尾追加一个'\0'
+- 如果src字符串的长度小于num，则拷贝完src字符串之后(不包括'\0')，并在末尾追加一个'\0'
 
 
 ### strcmp()
