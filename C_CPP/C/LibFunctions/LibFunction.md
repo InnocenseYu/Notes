@@ -205,7 +205,7 @@ int main()
 ```
 
 
-### char* strcat(char* dest, const char* src, unsigned char num)
+### char* strncat(char* dest, const char* src, unsigned char num)
 - 在 dest 字符串数组末端(覆盖dest '\0')增补src字符串的num个字符，并且末尾追加一个'\0'
 - 如果src字符串的长度小于num，则拷贝完src字符串之后(不包括'\0')，并在末尾追加一个'\0'
 
@@ -224,7 +224,14 @@ int main()
 不能用于字符串比较，char password[20] = {0}; password == "lixinyu"
 但是可以用于两个字符数组指针 值 的比较，char* str1[] = NULL; char* str2[] = NULL; *str1 == *str2
 ```
+### strncmp()
 
+- 选择 src 字符串的前 n 个字符与 dst 字符串比较，返回 0 >0 >0 三种结果
+
+### strstr()
+- char* strstr ( const char* str1, const char* str2);
+- 在 *str1 中查找 *str2
+- 找到的话返回*str2 在\*str1 中的地址，没找到的话返回 NULL 空指针 
 
 ### Sleep(m_seconds)
 - 按照时间 m_seconds 毫秒 休息一会

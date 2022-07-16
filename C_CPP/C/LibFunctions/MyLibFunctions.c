@@ -46,6 +46,10 @@ int my_strlen(const char* str)
 		str++;
 	}
 
+	// while(*str++)
+	// 	count++;
+	
+
 	return count;
 }
 
@@ -249,7 +253,7 @@ char* my_strncpy(char* dst, const char* src, unsigned int num)
 //// 实现 my_strncat /////
 /////////////////////////
 
-char* my_strncat(char* dst, char* src, unsigned int num)
+char* my_strncat(char* dst, const char* src, unsigned int num)
 {
 	char* start = dst;
 
@@ -274,5 +278,15 @@ char* my_strncat(char* dst, char* src, unsigned int num)
 	*dst = '\0'; //此时 dst 地址已经指向 num+1个数的位置，因此不需要 *dst++
 
 	return start;
+	
+}
+
+
+/////////////////////////
+//// 实现 my_strstr /////
+/////////////////////////
+
+char* my_strstr(const char* dst, const char* src)
+{
 	
 }
