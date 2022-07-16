@@ -210,4 +210,69 @@ int my_strcmp(const char* str1, const char* str2)
 }
 
 
-// 实现my_strncpy my_strncat
+//////////////////////////
+//// 实现my_strncpy //////
+/////////////////////////
+
+char* my_strncpy(char* dst, const char* src, unsigned int num)
+
+{
+	char* start = dst;
+
+	assert(dst && src);
+
+	//while (*dst++ = *src++) // num > strlen(src)+1, num控制的字符个数数组才会起作用
+	//	num--; // 
+
+	//while ((*dst++ = *src++)!= '\0') // num > strlen(src)+1, num控制的字符个数数组才会起作用
+	//	num--; 
+
+	while (num && (*dst++ = *src++)!= '\0') // 此时 num 控制的字符个数和 *src 末端 '\0' 同时起作用
+		num--; 
+
+	//while (--num) // 当 num = 0时，--num表达式结果为-1 真，所以不合适
+	//{
+	//	*dst++ = '\0';
+	//}
+	
+	if (num) // 排除num = 0 的影响，因为 0-1 = -1 为真
+	{
+		while (--num)  // 之所以使用--num 因为src的'\0'在赋值过去时，while(*dst++ = *src++) 中*dst++完成赋值，但是*dst++ = *src++表达式结果为假，num--不会执行，所以 -- 可以使 num 中包含'\0'
+			*dst++ = '\0'; // 余下num个字符全部赋值为'\0'
+	}
+
+	return(start);
+}
+
+
+/////////////////////////
+//// 实现 my_strncat /////
+/////////////////////////
+
+char* my_strncat(char* dst, char* src, unsigned int num)
+{
+	char* start = dst;
+
+	assert(dst && src);
+
+	while(*dst++) // dst 指向 '\0' 值的后一个地址
+		;
+	dst--; // 将 dst 地址拉回到 '\0' 值的地址
+
+	// while(num && (*dst++ == *src++)!='\0') // 这样写不合适，因为无论 num > strlen(src) + 1 或者 num < strlen(src) + 1 都需要在增添后的 *dst后添加 '\0', 使之成为完整的字符串
+	// 								       // 因此分别操作 num 和 (*dst++ == *src++)!='\0'
+	// 									   // num 的操作级别比 (*dst++ == *src++)!='\0' 高，所以优先考虑 num
+	// 	num--;
+
+	while(num--)
+	{
+		if((*dst++ == *src++) =='\0') // *dst后增添 '\0'操作自动完成
+			return start; //不考虑 num 是否已经操作完
+	}
+
+	// num 字数操作完后 *dst尾端手动增添 '\0'
+	*dst = '\0'; //此时 dst 地址已经指向 num+1个数的位置，因此不需要 *dst++
+
+	return start;
+	
+}
