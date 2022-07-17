@@ -226,12 +226,52 @@ int main()
 ```
 ### strncmp()
 
-- 选择 src 字符串的前 n 个字符与 dst 字符串比较，返回 0 >0 >0 三种结果
+- 选择 src 字符串的前 n 个字符与 dst 字符串比较，返回 0, >0, >0 三种结果
 
 ### strstr()
 - char* strstr ( const char* str1, const char* str2);
 - 在 *str1 中查找 *str2
 - 找到的话返回*str2 在\*str1 中的地址，没找到的话返回 NULL 空指针 
+
+
+### strtok()
+- char * strtok ( char * str, const char * sep );
+- sep 参数是个字符串，定义了用作分隔符的字符集合 
+  - char* sep = "./@"; 等其他分隔符
+  - char* sep[] = ",.@";
+- str 参数指定一个字符串，它包含了0个或者多个由sep字符串中一个或者多个分隔符分割的标记
+- strtok函数每找到str中的一个标记，就将其用 '\0'覆盖，并且自动保存它在字符串中的位置(即'\0'的位置)供下次使用，返回一个能打印这个标记之前所有字符串的指针
+  - 注：strtok函数会改变被操作的字符串，所以在使用strtok函数切分的字符串一般都是临时拷贝的内容并且可修改
+  - strcpy(cpy,str); 对str的字符串进行一次拷贝，防止原字符串被修改；
+- strtok函数的**第一个参数不为NULL**，函数找到str中第一个分隔符标记后，就将其用 '\0'覆盖，并且自动保存它在字符串中的位置(即'\0'的位置)供下次使用，返回一个能打印这个标记之前所有字符串的指针
+- 继续读取字符串中的内容，二次调用strtok函数，**第一个参数为NULL**，函数将在同一个字符串中被保存的位置开始，查找下一个标记
+- 如果字符串中不存在更多的标记，则返回NULL指针
+
+```C
+// 示例1
+  pch = strtok (str," ,.-");
+
+  while (pch != NULL)
+  {
+    printf ("%s\n",pch);
+    pch = strtok (NULL, " ,.-");
+  }
+
+// 示例2
+char *p = "zhangpengwei@bitedu.tech";
+const char* sep = ".@";
+char arr[30];
+char *ret = NULL;
+strcpy(arr, p);//将数据拷贝一份，处理arr数组的内容
+
+for(ret=strtok(arr, sep); ret!= NULL; ret=strtok(NULL, sep)) // ret=strtok(arr, sep); 只会进行一次调用，对 ret 初始化；
+                                                             // 只要满足 ret!= NULL; 就会执行下面的语句
+                                                             // 然后执行 ret=strtok(NULL, sep), 判断 ret!= NULL 执行下面语句
+{
+  printf("%s\n", str);
+}
+
+```
 
 ### Sleep(m_seconds)
 - 按照时间 m_seconds 毫秒 休息一会

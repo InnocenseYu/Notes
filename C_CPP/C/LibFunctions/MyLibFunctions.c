@@ -288,5 +288,46 @@ char* my_strncat(char* dst, const char* src, unsigned int num)
 
 char* my_strstr(const char* dst, const char* src)
 {
-	
+	assert(dst && src);
+
+	char* s1 = NULL;
+	char* s2 = NULL;
+
+	char* cp = (char*)dst; // dst 是 const char* 类型，cp 是 char* 
+
+	if(*src == '\0')
+	{
+		return dst;
+	}
+
+	// if(!*src)  // src 是 NULL, *src == '\0'; !*src 指的就是*src = '\0', !*src != 0 为真
+	// {
+	// 	return dst;
+	// }
+
+	while(cp)
+	{
+		s1 = cp;
+		char* s2 = (char*)src;
+
+		while(*s1 && *s2 && !(*s1-*s2))
+		{
+			s1++;
+			s2++;
+		}
+
+		if(*s2) // *src == '\0'; src已经排查完到'\0'，因为while(*s1 && *s2 && !(*s1-*s2))的限制，'\0'之前的字符全部相同且*s1 ！= 0，所以找到dst中与src 所有重复的字符串
+		{
+			return cp; // 返回 dst 中与 src 重复开始的位置，这是使用 cp 进行的标记，因为 s1 一直在变化 
+		}
+
+		if(*s1) // dst 长度小于 src 提前到达 '\0'的地址，从内部 while 跳出，避免下面语句 cp++ 标记符的再次调用这里提前返回
+			return NULL;
+
+		cp++;
+
+	}
+
+	return NULL;
+
 }
