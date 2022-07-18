@@ -381,3 +381,9 @@ void* my_memmove(void* dst, const void* src, unsigned int num) // num 单位为b
 
 	return ret;
 }
+
+
+void* my_memset(void* dst, int c, unsigned int num)
+{
+
+}

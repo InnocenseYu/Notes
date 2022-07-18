@@ -276,7 +276,16 @@ for(ret=strtok(arr, sep); ret!= NULL; ret=strtok(NULL, sep)) // ret=strtok(arr, 
 ### strerror
 - char* strerror(int errno)
 - 当C 语言的库函数在执行过程中发生了错误，就会把对应的错误吗赋值到errornum中
-- 调用 strerror 函数，输入 errno 错误码参数，即可返回错误码表示的提示信息字符串地址
+- 调用 strerror 函数，输入 errno 上一个错误码参数，即可返回错误码表示的提示信息字符串地址
+
+```C
+
+FILE* pFile;
+pFile = fopen("unexist.ent", "r");
+if (pFile == NULL)
+printf("Error opening file unexist.ent: %s\n", strerror(errno)); //errno: Last error number
+
+```
 
 ### memcpy
 - 不能胜任重叠拷贝
@@ -285,6 +294,21 @@ for(ret=strtok(arr, sep); ret!= NULL; ret=strtok(NULL, sep)) // ret=strtok(arr, 
 ### memmove
 - 重叠内存的拷贝
 
+
+### memcmp
+- int memcmp (const void * ptr1, const void * ptr2, unsigned int num);
+- 返回值：num 单位为 byte，ptr1 和 ptr2 前num个字节的大小比较, 考虑存储的大小端问题
+  - ptr1 < ptr2，-1
+  - ptr1 > ptr2，1
+  - ptr1 = ptr2，0
+
+### memset
+- 内存设置
+- void* memset(void* dst, int c, unsigned int num)
+  - dst 要设置的区域
+  - c 设置的字符是什么，比如
+    - '#' '*' 1 '1' 等
+  - num 设置 num 字节个 c
 
 ### FILE* fopen()
 - 打开文件函数，打开失败（比如不存在，权限不足等原因）的话返回一个空指针 NULL
