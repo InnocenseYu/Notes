@@ -273,6 +273,22 @@ for(ret=strtok(arr, sep); ret!= NULL; ret=strtok(NULL, sep)) // ret=strtok(arr, 
 
 ```
 
+### strerror
+- char* strerror(int errno)
+- 当C 语言的库函数在执行过程中发生了错误，就会把对应的错误吗赋值到errornum中
+- 调用 strerror 函数，输入 errno 错误码参数，即可返回错误码表示的提示信息字符串地址
+
+### memcpy
+- 不能胜任重叠拷贝
+
+
+### memmove
+- 重叠内存的拷贝
+
+
+### FILE* fopen()
+- 打开文件函数，打开失败（比如不存在，权限不足等原因）的话返回一个空指针 NULL
+
 ### Sleep(m_seconds)
 - 按照时间 m_seconds 毫秒 休息一会
 - 包含在windows.h头文件中

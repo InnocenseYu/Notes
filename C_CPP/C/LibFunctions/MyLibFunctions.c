@@ -331,3 +331,53 @@ char* my_strstr(const char* dst, const char* src)
 	return NULL;
 
 }
+
+
+////////////////////////////////////////
+///// memcpy() 非内存重叠的内存拷贝 //////
+////////////////////////////////////////
+
+void* my_memcpy(void* dst, const void* src, unsigned int num)
+{
+	assert(dst && src);
+
+	void* start = dst;
+
+	while (num--) // 不能满足字符串的末尾 '\0' 的复制
+	{
+		*(char*)dst = *(char*)src; // 强制转换为字节操作
+		++(char*)dst;
+		++(char*)src;
+		// (char*)dst++ // 自加运算符 ++ 优先级高于 类型转换 (type)
+	}
+
+	return start;
+}
+
+
+//////////////////////////////////////////////////////
+///// memmove() 重叠内存中的两个变量互相转换(移动) //////
+//////////////////////////////////////////////////////
+
+void* my_memmove(void* dst, const void* src, unsigned int num) // num 单位为byte, 需要移动字符串src的大小
+{
+	void* ret = dst;
+	while (num--) // num 已经修改
+	{
+		if (dst < src) // 比较大小跟类型没有关系
+		{
+			*(char*)dst = *(char*)src;
+
+			++(char*)dst;
+			++(char*)src;
+		}
+		else
+		{
+			// *((char*)dst + num -1) = *((char*)src+ num-1); // 因为 while(num--) 已经 num-1 了，所以这里的 1 不需要减了
+			*((char*)dst + num) = *((char*)src + num);  // (char*)src + num, 字符类型指针 + unsigned int, src++：每次移动一个地址(1byte) +1 这个 1 可以是int 也可以是unsigned int
+
+		}
+	}
+
+	return ret;
+}
