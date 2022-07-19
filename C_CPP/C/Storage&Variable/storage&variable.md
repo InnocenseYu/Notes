@@ -230,6 +230,7 @@ int main()
 	![](../Storage%26Variable/array_pointer_type.png)
 
   - 结构体类型 struct
+    - [详细](../Structure/structure.md)
   - 枚举类型 enum
   - 联合类型 union
 - 指针类型
