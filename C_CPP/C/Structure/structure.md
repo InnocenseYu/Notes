@@ -99,7 +99,7 @@ typedef struct Node  // 标记名不省略
 - 使用结构体定义结构变量时，使用 {} 赋值初始化
   - struct 标记 / 结构名 结构变量 = { };
 
-- 定义时，直接初始化
+- 定义时，直接初始化(按照顺序)
 
 ```C
 
@@ -109,7 +109,7 @@ struct S
 	char c;
 	char arr[20];
 	double d;
-}s1;
+}* s1 = NULL; // 定义时，直接初始化
 
 struct T
 {
@@ -117,7 +117,7 @@ struct T
 	struct S s; // 结构体中定义 结构体
   struct T* next; // 结构体的自引用
 	char* p;
-}t1= {"haha", {10, 'z', "nihao", 6.18}, NULL, "hehe"};
+}t1= {"haha", {10, 'z', "nihao", 6.18}, NULL, "hehe"}; // 定义时，直接初始化
 
 char arr[] = "hello bit\n";
 struct T t = { "hehe", {100, 'w', "hello world", 3.14}, NULL, arr}; // 定义时，直接初始化
@@ -125,7 +125,7 @@ struct T t2 = {0}; // 将 t2 结构体变量 中成员变量全部初始化为0�
 
 ```
 
-- 定义时，直接初始化，乱序赋值
+- 定义时，直接初始化，乱序赋值(必须使用 .成员名)
 
 ```C
 
@@ -138,73 +138,23 @@ struct S s2 = {
 
 ```
 
-- 定义后，单独对结构变量进行赋值
+- 定义后，对结构变量成员单独进行赋值
 
 ```C
+struct S s3 = {0};
 
-  s1.a = 5;
-	s1.d = 3.1415;
-	strcpy(s1.arr, "niyehao"); // 字符数组不接受直接将值赋值给它，它的值是初始化来的
-	s1.c = 'B';
+s1= &s3;
+s1->a = 5;
+s1->d = 3.1415;
+strcpy(s1->arr, "woyehao"); // 字符数组不接受直接将值赋值给它，它的值是初始化来的
+s1->c = 'B';
 
-// 以下赋值方式对不对？不对，比如s1->a = 5; = 左边为指向a的指针，= 右边为 int 型 两边无法赋值
-  // s1->a = 5;
-	// s1->d = 3.1415;
-	// strcpy(s1->arr, "niyehao"); // 字符数组不接受直接将值赋值给它，它的值是初始化来的
-	// s1->c = 'B';
+struct S s4 = { 0 };
+	s4.a = 13;
+	strcpy(s4.arr, "jinwanxiaobaobao"); // s4.arr = "jinwanxiaobaobao"; 字符数组不接受直接将值赋值给它，它的值是初始化来的
+	s4.c = 's';
+	s4.d = 1.732;
 
-
-```
-
-```C
-// 结构体初始化 //
-
-struct S
-{
-	int a;
-	char c;
-	char arr[20];
-	double d;
-};
-
-struct T
-{
-	char ch[10];
-	struct S s; // 结构体中定义 结构体
-	char* p;
-};
-
-void print1(struct T tmp) // 结构体传参，tmp 是对传参变量数据的一份临时拷贝。
-{
-  printf("%s\n", tmp.ch);  // hehe
-	printf("%s\n", tmp.s.arr); // hello world
-	printf("%lf\n", tmp.s.d); // 3.14
-	printf("%s", tmp.p); // hello bit，换行
-}
-
-void print2(struct T* tmp) // 结构体 传地址
-{
-	printf("%s\n", tmp->ch);  // hehe
-	printf("%s\n", tmp->s.arr); // hello world
-	printf("%lf\n", tmp->s.d); // 3.14
-	printf("%s", tmp->p); // hello bit，换行
-}
-
-int main()
-{
-	char arr[] = "hello bit\n"; // hello bit 换行
-	struct T t = { "hehe", {100, 'w', "hello world", 3.14}, arr }; // 定义时直接初始化时，使用{}包裹，结构体中 结构体初始化仍然使用{}包裹
-
-    print1(t);
-    print2(&t);
-
-	// printf("%s\n", t.ch);  // hehe
-	// printf("%s\n", t.s.arr); // hello world
-	// printf("%lf\n", t.s.d); // 3.14
-	// printf("%s", t.p); // hello bit，换行 
-	 
-	return 0;
-}
 ```
 
 ### 结构变量成员操作
@@ -215,17 +165,19 @@ int main()
 
 ```C
 
-  s1.a = 5;
-	s1.d = 3.1415;
-	strcpy(s1.arr, "niyehao"); // 字符数组不接受直接将值赋值给它，它的值是初始化来的
-	s1.c = 'B';
+struct S s3 = { 0 };
+	s1 = &s3; // s1为结构体指针
+	s1->a = 5;
+	s1->d = 3.1415;
+	strcpy(s1->arr, "woyehao"); // 字符数组不接受直接将值赋值给它，它的值是初始化来的
+	s1->c = 'B';
+	printf("s1->arr = %s\n", s1->arr);
 
-// 以下赋值方式对不对？不对，比如s1->a = 5; = 左边为指向a的指针，= 右边为 int 型 两边无法赋值
-  // s1->a = 5;
-	// s1->d = 3.1415;
-	// strcpy(s1->arr, "niyehao"); // 字符数组不接受直接将值赋值给它，它的值是初始化来的
-	// s1->c = 'B';
-
+struct S s4 = { 0 };
+	s4.a = 13;
+	strcpy(s4.arr, "jinwanxiaobaobao"); // s4.arr = "jinwanxiaobaobao"; 字符数组不接受直接将值赋值给它，它的值是初始化来的
+	s4.c = 's';
+	s4.d = 1.732;
 
 void print1(struct T tmp) // 结构体传参，tmp 是对传参变量数据的一份临时拷贝。
 {
@@ -250,14 +202,33 @@ void print2(struct T* tmp) // 结构体 传地址
 
 - 原因：结构体的内存对齐是拿空间来换取时间的做法
   - 32bit机器 有32根地址线即32根数据线，所以一次拿 4byte, 如果不是按照每次拿 4byte 来计算的话，则至少需要2次来寻找数据
+- 应用方法：
+  - 设计结构体时，既要满足对齐，又要节省空间，应该让占用空间小的成员尽量集中在一起
 - 内存分布情况：
   - 第一个结构体变量成员 在结构体变量地址 偏移量为0 的地址处
   - 其他结构体变量成员 要对齐到 对齐数 的整数倍的地址处(地址从上一个结构体成员地址起始端开始的)
     - 对齐数：编译器默认的一个对齐数 与 该变量成员大小 的较小值, min(默认对齐数，结构体变量成员大小（byte）)
       - vs 平台默认值为 8byte
       - gcc 平台无默认值，以结构体变量成员大小（byte）为准
-  - 结构体 总大小为 除第一个结构体变量成员 外 其他结构体变量成员 的 最大对齐数的整数倍
-  - 如果嵌套了结构体的情况，嵌套的结构体对齐到自己的最大对齐数的整数倍处，结构体的整体大小就是所有最大对齐数（含嵌套结构体的对齐数）的整数倍
+  - 结构体 总大小为 除第一个结构体变量成员外（第一个结构体成员没有对齐数） 其他结构体变量成员的 最大对齐数 的整数倍
+  - 如果嵌套了结构体的情况，嵌套的结构体对齐到自己内部的最大对齐数的整数倍处，结构体的整体大小就是所有最大对齐数（含嵌套结构体的对齐数）的整数倍
+- 修改默认对齐数
+  - #pragma 函数包裹的部分默认对齐数为自设置的
+  
+  ```C
+
+  #pragma pack(8)  //设置默认对齐数为8
+  struct S1
+  {
+    char c1;
+    int i;
+    char c2;
+  };
+  #pragma pack() //取消设置的默认对齐数，还原为默认
+
+
+
+  ```
 
 ![](../Structure/struct_memory.png)
 
@@ -266,27 +237,20 @@ void print2(struct T* tmp) // 结构体 传地址
 
 struct S
 {
-  char c1; // c1与s1 偏移量0的地址一致
-  int a; // a 大小为4byte, 对齐数 = min(8,4) = 4，偏移地址：对齐数4*1=4，上一个结构体成员 c1 起始端地址 1 + 3个字节 = 对齐数4，补三个字节空间处存储 a 4个字节
-  char c2; // c2的大小为 1byte, 对齐数为min(8,1) =1, 偏移地址：对齐数1*1 =1，从上一个结构体成员 a 的末端地址 顺接即可
-  // 结构体大小：max(a对齐数4，c2对齐数1) = 4，当前为 9byte, 4*2 < 9byte < 4*3, 所以末端补3，以满足 vs平台 默认对齐数 8 的整数倍要求，结构体大小为 4*3 =12
+	int a; // 4
+	char c; // 1 1+4 = 5
+	char arr[20]; // min(20,8)=8; arr 之前存在 5byte 数据；1*8 = 8，从 c 的末端补充 3个，5+3 = 8 是 8的一倍，arr 自身20byte, 5 + 3 + 20 = 28
+	double d; // min(8,8) = 8；d 之前存在 28byte 数据; 4*8 = 32, 从arr 末端补充 4个，28+4 =32 是 8 的三倍，d自身大小为8byte, 28 + 4 + 8 = 40
+}s1; // sizeof(struct S); 4 + 1 + 3 + 20 + 4 + 8 = 40, max(1,8,8) = 8, 总大小为8的倍数，所以是 5*8 = 40;
 
-};
-
-struct S s1={0};
-
-// 例题1
-struct S3
+struct T
 {
-double d;
-char c;
-int i;
-};
-printf("%d\n", sizeof(struct S3)); // 8 + 1 + 3 + 4 = 16 byte 
-
+	char ch[10]; // 大小 10
+	struct S s; // 结构体中定义 结构体，大小 40，min(8,40) = 8, 上个数组占据 10byte, 10+6 = 16 = 2*8, 所以补充6byte, 加上自身大小40，10 + 6 + 40 = 56
+	char* p; // 大小 4byte，min(4,8) = 4, 4*14 = 56，从s开始不需要补，56 + 4 = 60
+}; // sizeof(struct T); s 结构体内部最大对齐数为 double 类型的 8；max(8,4) = 8； 7*8 < 60 < 8*8, 所以大小为64byte
 
 ```
-
 
 ### 定义结构体指针
 
@@ -296,13 +260,33 @@ printf("%d\n", sizeof(struct S3)); // 8 + 1 + 3 + 4 = 16 byte
 ```C
 
 // 定义结构变量指针//
-struct Stu*
+struct Stu
 {
     char name[20];
     short age;
     char sex;
     char phone[12];
-}s1; //使用结构体定义结构变量指针 s1
+}* s1; //使用结构体定义结构变量指针 s1
+
+struct Tec
+{
+	int a;
+	char c;
+	char arr[20];
+	double d;
+}t;
+
+struct Tec* t1 = NULL; 
+t1 = &t;
+
+```
+
+### 结构体传参
+- 结构体传参，形参 是对传入 实参结构变量数据 的一份临时拷贝
+- 结构体 传地址，通过传入实参的 地址 操作 实参结构变量数据，不会形成数据的临时拷贝，开辟内存空间
+- 推荐结构体传参 使用结构体地址
+
+```C
 
 struct S
 {
@@ -319,6 +303,23 @@ struct T
 	char* p;
 };
 
+void Init(struct S* ps)
+{
+  ps->a = 100;
+  ps->c = 'A';
+  ps->arr = "haha";
+  ps->d = 3.14;
+
+}
+
+void print1(struct T tmp) // 结构体传参
+{
+	printf("%s\n", tmp.ch);  // hehe
+	printf("%s\n", tmp.s.arr); // hello world
+	printf("%lf\n", tmp.s.d); // 3.14
+	printf("%s", tmp.p); // hello bit，换行
+}
+
 void print2(struct T* tmp) // 结构体 传地址
 {
 	printf("%s\n", tmp->ch);  // hehe
@@ -332,17 +333,16 @@ int main()
 	char arr[] = "hello bit\n"; // hello bit 换行
 	struct T t = { "hehe", {100, 'w', "hello world", 3.14}, arr }; // 结构体初始化时，使用{}包裹，结构体中 结构体初始化仍然使用{}包裹
   
+  struct S s1 = {0};
+  Init(&s1);
+
+  print1(t);
   print2(&t);
 
 	return 0;
 }
 
 ```
-
-### 结构体传参
-- 结构体传参，形参 是对传入 实参结构变量数据 的一份临时拷贝
-- 结构体 传地址，通过传入实参的 地址 操作 实参结构变量数据，不会形成数据的临时拷贝，开辟内存空间
-- 推荐结构体传参 使用结构体地址
 
 ### typedef-类型重定义
 - 为某一类型重命名
@@ -381,13 +381,13 @@ struct Stu
 }s1; //使用结构体定义结构变量s1
 
 // 定义结构变量指针//
-struct Stu*
+struct Stu
 {
     char name[20];
     short age;
     char sex;
     char phone[12];
-}s1; //使用结构体定义结构变量指针 s1
+}* s1; //使用结构体定义结构变量指针 s1
 
 int main()
 {
