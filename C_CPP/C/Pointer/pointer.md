@@ -459,7 +459,7 @@ FuncPointer(signal(int, FuncPointer));
 
 
 // 示例3
-typedef int* pInts[10]; // 指针数组类型重命名
+typedef int* pInts[10]; // 指针数组类型重命名 标记为pInts
 int main()
 {
     int arr[10] = { 1,2,3,4 };
