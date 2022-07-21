@@ -37,7 +37,7 @@ int main()
 int check_sys(void)
 {
     int a = 1;
-    char* p = (char*)&a;
+    char* p = (char*)&a; // 强制转化为char* 类型，虽然 a 是int 类型，4byte, 但是拿值时是 从低字节开始，1byte的拿
 
     if(1 == *p)
     {
@@ -75,6 +75,22 @@ int check_sys(void)
     int a = 1;
     return *(char*)&a; // 不使用p作为中转
 }
+
+
+// 方法2
+int check_sys(void)
+{
+    union
+    {
+        char a;
+        int b;
+    }u;
+
+    u.b = 1;
+
+    return u.a; // 返回1 即为小端
+}
+
 
 int main()
 {
