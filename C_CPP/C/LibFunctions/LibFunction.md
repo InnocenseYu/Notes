@@ -6,16 +6,19 @@
 - 函数返回值类型是 void时，return 后面不能带任何数字或者语句，直接写分号即可，表示含义是 结束当前函数，如 return; 
 - return a; 后面只能接一个a，也就是只能返回一个数
 
-### int printf()
+### int printf(指针)
 - 返回 int 型 输入字符的个数；
-- printf("%s", arr), %s输出内容仍然是直到遇到'\0'停止打印
-- printf("%s",arr), arr必须是字符串的地址
+- printf("%s", arr), %s输出内容仍然是直到遇到'\0'停止打印, arr必须是字符串的地址
+- char* str = "abcdef"; 
+  - printf(str); 
+  - printf("abcdef");
 - printf("%d\n",b), b在内存中的补码作为有符号整型，打印出b的原码展示
+
 ```C
+
 	printf("%d", printf("%d", printf("%d", 43)));
 	       //1           //2        //43     
 ```
-
 
 ### scanf("%10s",*name)
 - name 地址

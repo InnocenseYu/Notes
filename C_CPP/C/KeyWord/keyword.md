@@ -45,3 +45,11 @@ FuncPointer(signal(int, FuncPointer));
 ### define-宏定义 
 - #define MAX(X,Y) (X>Y?X:Y)
 - 使用 MAX(X,Y) 替换 (X>Y?X:Y)
+
+
+
+### NULL-空指针
+
+- NULL 空指针不是一个有效地址，不指向一块有效空间;
+  - strcmp(NULL,"abc"); 操作失败
+- free(NULL); 不会操作失败，，但是什么也不会做
