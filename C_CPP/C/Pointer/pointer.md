@@ -70,6 +70,19 @@ printf("*p5 = %#x\n", *p5); // 起始地址指向03的地址，1次读取一个s
 
 
 ### 野指针
+
+```C
+
+int* test(void)
+{
+	int* ptr; // 非法访问内存，ptr没赋初值，操作野指针
+	*ptr = 10;
+	return ptr;
+}
+
+
+```
+
 - 指针未初始化
 ![](../Pointer/pointer_NoInitialize.png)
 - 解决方法：
