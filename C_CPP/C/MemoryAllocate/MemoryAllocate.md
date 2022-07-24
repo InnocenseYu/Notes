@@ -212,33 +212,35 @@ int main()
     //代码1
     struct st_type *sp = (struct st_type*)malloc(sizeof(struct st_type));
     sp->arr = malloc(10*sizeof(int)); // 栈区开辟的 sp->arr 指针存放 malloc 在堆区开辟的动态内存空间的地址
+                                      // 因为 sp->arr 存放的是地址，所以开辟的动态内存返回地址赋值给结构体成员指针 sp->arr 不会对sizeof(struct st_type) 的大小产生影响
     
-    if(sp->arr == NULL)
-    {
-      printf("%s\n", strerror(errno));
-    }
-    else
+    if(sp->arr ！= NULL)
     {
       //业务处理
       sp->i = 10;
       for(int i=0; i<10; i++)
       {
-        sp->a[i] = i;
+        sp->arr[i] = i;
+        // sp->(*(arr+i)) = i;
       }
     }
 
-    typa_a *sp_re = (type_a*)realloc(sp, 64); // 向 sp 指针指向的空间 重新开辟 64个byte, 扩充了 5 个int 大小的空间
+    typa_a *sp->arr1 = (type_a*)realloc(sp->arr, 60); // 向 sp-arr 指针指向的空间 重新开辟 60个byte, arr 由 10个 int 扩充到 15 个 int 大小的空间
 
-    if(sp_re != NULL)
+    if(sp->arr1 != NULL)
     {
-      sp = sp_re;
+      sp->arr = sp->arr1;
+
       for(int i=10; i<15; i++)
       {
-        sp-a[i] = i;
+        sp->arr[i] = i;
       }
     }
 
-    free(p);
-    p = NULL;
+    free(sp->arr);
+    sp->arr = NULL;
+
+    free(sp);
+    sp = NULL;
 
     ```
