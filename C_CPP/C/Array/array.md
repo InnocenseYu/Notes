@@ -217,13 +217,24 @@ int main()
 
 ### 指针与数组的关系
 
+- 指针指向的连续空间可以当作数组来使用
+
 ```C
-int a[4] = {1,2,3,4};
-int* ptr = (int*)((int)a+1) 
 
-printf("%x",ptr[-1]);
+int *p = NULL;
+p = (int*)malloc(5*sizeof(int));
+
+if(p!=NULL)
+{
+  for(int i=0; i<5; i++)
+  {
+    *(p+i) = i;
+    // p[i] = i; // 同 *(p+i) = i;
+  }
+}
+
+printf("%x",p[-1]); // 这里只是演示，p[-1]是非法操作内存，不可取
 // ptr[-1] == *(ptr+(-1))
-
 
 ```
 

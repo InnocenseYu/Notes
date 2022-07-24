@@ -1,13 +1,17 @@
 ## 动态内存管理与分配
 
+
+![内存区域划分](../Storage%26Variable/memorry_use.png)
+
+
 - 动态内存的管理与分配在 堆区 完成，其他两个区为 栈区 静态区
 - void* malloc(size_t size);
-  - 内存中开辟 size大小 字节的 未初始化的空间, 值为随机值
+  - 内存中开辟**size大小字节**的**未初始化**的**连续字节**的空间, 值为随机值
   - 开辟成功的话返回空间的 起始地址，否则返回 NULL，所以**使用时需进行地址检查**
 
 
 - void* calloc(size_t num, size_t size);
-  - 内存中开辟 num 个 size 大小字节的空间，并初始化为 0
+  - 内存中开辟 num 个 size 大小字节的**连续**空间，并初始化为 0
   - 开辟成功的话返回空间的 起始地址，否则返回 NULL，所以**使用时需进行地址检查**
 
 
@@ -132,3 +136,109 @@ int main()
   ```
 
 - 内存泄漏-动态开辟的内存忘记释放
+
+
+### 柔性数组
+
+- C99 中，结构体类型中的 最后一个结构成员允许是未知大小的数组，这就叫做**柔性数组**成员
+
+  ```C
+
+  // 示例1
+  typedef struct st_type
+  {
+    int i;
+
+    // 以下是两种创建柔性数组的方式，有些编译器会报错无法编译，可以一种方式不行换成另一个
+    int a[0];//柔性数组成员
+
+    int a[];//柔性数组成员
+
+  }type_a;
+
+  ```
+
+  - 结构体中的柔性数组成员前面必须至少一个其他成员；
+  - sizeof 返回的这种结构大小不包括柔性数组的内存，sizeof(struct st_type) == 4, a 数组没有大小；
+  - 包含柔性数组成员的结构体用 malloc() remalloc() 函数进行内存的动态分配时，分配的内存应该大于结构体的大小，以适应柔性数组的预期大小
+    
+    ```C
+    //////////////////////////
+    //// 方法1 //////////////
+    ////////////////////////
+
+    //代码1
+    type_a *sp = (type_a*)malloc(sizeof(type_a) + 10*sizeof(int));//  40+4 = 44 byte, sizeof(type_a) = 4byte大小是在栈区的空间，10*sizeof(int) = 40在堆区的动态内存空间，预期柔性数组 a 中存放 10个 int 类型元素
+    
+    if(sp == NULL)
+    {
+      printf("%s\n", strerror(errno));
+    }
+    else
+    {
+      //业务处理
+      sp->i = 10;
+      for(int i=0; i<10; i++)
+      {
+        sp->a[i] = i;
+      }
+    }
+
+    typa_a *sp_re = (type_a*)realloc(sp, 64); // 向 sp 指针指向的空间 重新开辟 64个byte, 扩充了 5 个int 大小的空间
+
+    if(sp_re != NULL)
+    {
+      sp = sp_re;
+      for(int i=10; i<15; i++)
+      {
+        sp-a[i] = i;
+      }
+    }
+
+    free(p);
+    p = NULL;
+
+
+    /////////////////////////////
+    //// 使用指针 模拟柔性数组 ////
+    /////////////////////////////
+
+    struct st_type
+    {
+      int i; // 4
+      int *arr; // 4
+    };  // sizeof(struct st_type) == 8byte
+
+    //代码1
+    struct st_type *sp = (struct st_type*)malloc(sizeof(struct st_type));
+    sp->arr = malloc(10*sizeof(int)); // 栈区开辟的 sp->arr 指针存放 malloc 在堆区开辟的动态内存空间的地址
+    
+    if(sp->arr == NULL)
+    {
+      printf("%s\n", strerror(errno));
+    }
+    else
+    {
+      //业务处理
+      sp->i = 10;
+      for(int i=0; i<10; i++)
+      {
+        sp->a[i] = i;
+      }
+    }
+
+    typa_a *sp_re = (type_a*)realloc(sp, 64); // 向 sp 指针指向的空间 重新开辟 64个byte, 扩充了 5 个int 大小的空间
+
+    if(sp_re != NULL)
+    {
+      sp = sp_re;
+      for(int i=10; i<15; i++)
+      {
+        sp-a[i] = i;
+      }
+    }
+
+    free(p);
+    p = NULL;
+
+    ```

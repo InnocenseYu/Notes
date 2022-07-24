@@ -335,6 +335,9 @@ int main()
 ![](./stack0.png)
 
 
+![](../Storage%26Variable/memorry_use.png)
+
+
 ### 栈区的使用
 
 - 函数中局部变量i、arr都是局部变量，局部变量值都存储在栈区上
