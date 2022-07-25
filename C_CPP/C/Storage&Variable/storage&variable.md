@@ -384,8 +384,43 @@ int main()
 
 ### 动态内存管理与分配
 
-- 
+```C
 
+typedef struct st_type
+{
+	int i;
+
+    // 以下是两种创建柔性数组的方式，有些编译器会报错无法编译，可以一种方式不行换成另一个
+    int a[0];//柔性数组成员
+
+    int a[];//柔性数组成员
+
+}type_a;
+
+type_a *sp = malloc(sizeof(type_a) + 10*sizeof(int));
+
+```
+-  使用 malloc 函数开辟 40+4 = 44 byte 的动态内存空间全部在堆区开辟完成，内存连续
+-  i 和 数组a 的空间是连续的，有利于访问速度；
+
+```C
+
+struct st_type
+    {
+      int i; // 4
+      int *arr; // 4
+    };  // sizeof(struct st_type) == 8byte
+
+    //代码1
+    struct st_type *sp = (struct st_type*)malloc(sizeof(struct st_type)); // 拿结构体的大小在堆区开辟同大小的内存空间
+	
+	// 栈区开辟的 sp->arr 指针存放 malloc 在堆区开辟的动态内存空间的地址
+    // 因为 sp->arr 存放的是地址，所以开辟的动态内存返回地址赋值给结构体成员指针 sp->arr 不会对sizeof(struct st_type) 的大小产生影响
+    sp->arr = malloc(10*sizeof(int)); 
+	// sp指向空间和sp->arr 指向空间都在堆区，但不是位于同一连续内存内存块，因此会产生更多的内存碎片 
+    
+```
+- 当使用指针替代柔性数组时，对结构体开辟完内存空间后仍然要对 结构体成员指针 开辟内存空间，两个堆区动态内存空间不连续，易产生内存碎片，降低访问速度
 
 
 ### 计算机存储结构
