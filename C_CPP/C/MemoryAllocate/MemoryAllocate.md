@@ -211,7 +211,7 @@ int main()
       int i; // 4
       int *arr; // 4
     };  // sizeof(struct st_type) == 8byte
-
+ 
     //代码1
     struct st_type *sp = (struct st_type*)malloc(sizeof(struct st_type));
     sp->arr = malloc(10*sizeof(int)); // 栈区开辟的 sp->arr 指针存放 malloc 在堆区开辟的动态内存空间的地址
