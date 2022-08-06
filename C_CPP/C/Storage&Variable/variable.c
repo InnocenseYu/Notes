@@ -4,6 +4,9 @@
 //static、extern 关键字修饰变量 //
 ///////////////////////////////
 
+// 源文件test.c
+#include <stdio.h>
+
 void test()
 {
     //int n = 1;  // 局部变量只作用在作用域，用完后释放存储
@@ -13,7 +16,12 @@ void test()
 
 }
 
-//void test(); // 因为头文件未包含，直接这样使用的无效；
+// 头文件 test.h
+void test(void);
+
+// 源文件 main.c
+#include <stdio.h>
+//void test(); // main.c 未包含 头文件 test.h ，直接这样使用 test() 函数无效；
 extern void test();  // 当头文件未包含 test() 函数时，可以使用 extern 关键字引用使用，但 仅仅作用于函数的调用，与调用函数的内部参数无关系
 
 int main()
