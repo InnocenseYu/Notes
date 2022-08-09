@@ -54,6 +54,15 @@ for(i = 0; i<3; i++)
   - scanf("%d\n",&a);
   - \n 对于 scanf 来说是直接舍弃 空格 换行操作，当你输入空格、换行时都会被 scanf 丢弃，需要输入两次值才能打印
 
+
+### 比较scanf 和 printf 函数
+- scanf / printf 是针对标准输入流 / 标准输出流的格式化输入 / 输出语句 
+- fscanf / fprintf 是针对所有输入流 / 所有输出流的格式化输入 / 输出语句
+- sscanf / sprintf 
+  - sprintf 把格式化的数据转换成字符串存储
+  - sscanf 从 字符串 中读取格式化的数据
+
+
 ### gets(*name)
 - name 指针类型
 - 结束条件
