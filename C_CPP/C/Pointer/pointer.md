@@ -680,9 +680,9 @@ void test_bstruct_age()
 	struct Stu s[3] = {{"liming",18},{"xiaohong",22},{"xiaozhang",20}};
 	int size = sizeof(s)/sizeof(s[0]);
 
-	bsort(str, size, sizeof(s[0]), cmp_struct_age); // bubble_sort
+	bsort(s, size, sizeof(s[0]), cmp_struct_age); // bubble_sort
 	
-	for(int i=0;i<3;i++)
+	for(int i=0; i<3; i++)
 	{
 		printf("%d ", s[i].age);
 	}
