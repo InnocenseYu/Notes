@@ -12,11 +12,13 @@
 - char* str = "abcdef"; 
   - printf(str); 
   - printf("abcdef");
+- printf("abc""de""f") ;  printf("ab" "c" "de" "f") ; 打印 abcdef
+  - printf 函数打印时，当有多个字符串连在一起，C 语言天然的会将它们连在一起，当作一个字符串打印
+
 - printf("%d\n",b), b在内存中的补码作为有符号整型，打印出b的原码展示
 
 ```C
-
-	printf("%d", printf("%d", printf("%d", 43)));
+printf("%d", printf("%d", printf("%d", 43)));
 	       //1           //2        //43     
 ```
 
