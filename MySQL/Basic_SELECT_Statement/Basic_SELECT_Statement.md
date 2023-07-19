@@ -3,7 +3,7 @@
 
 ### DDL(data definition language) 数据定义语言
 
-```
+```mysql
 CREATE 
 ALTER
 DROP
@@ -13,7 +13,7 @@ TRUNCATE
 
 ### DML(data manipulation language) 数据操作语言
 
-```
+```mysql
 INSERT
 DELETE
 SELECT
@@ -22,7 +22,7 @@ UPDATE
 
 ### DCL(data control language) 数据控制语言
 
-```
+```mysql
 COMMIT
 ROLLBACK
 SAVEPOINT
@@ -63,7 +63,7 @@ FROM 标识从哪个表中选择
 - 方式2，字段名和别名间使用**AS**, 全称是 alias
 - 方式3，如何别名有空格，防止歧义，标准规定使用 "" 
 
-```
+```mysql
 SELECT employee_id emp_id, last_name AS lname, department_id "dp id"
 FROM employees;
 ```
@@ -71,7 +71,7 @@ FROM employees;
 ### 去除重复行
 - 
 
-```
+```mysql
 SELECT DISTINCT department_id
 FROM employees;
 
@@ -91,7 +91,7 @@ FROM employees;
 - null 相当于 什么也没有，不知它是啥
 - 空值参与运算，结果也是空值
 
-```
+```mysql
 SELECT employee_id, salary "月工资"，salary * (1 + commission_pct) * 12 "年工资", commission_pct
 FROM employees;
 ```
@@ -101,7 +101,7 @@ FROM employees;
 - 不是单引号 ''
 - 当表名与保留关键字一致时，需要使用着重号包裹
 
-```
+```mysql
 SELECT * FROM `order`; 
 
 ```
@@ -110,7 +110,7 @@ SELECT * FROM `order`;
 
 - 当需要查询的常数不存在与表中时，但是又需要使用它，可以在用 select 查询时使用 单引号'' 包裹，生产一列同列名一样的字段
 
-```
+```mysql
 // 李明 18 就是查询常数，不存在于 employees 表格，会生成同名的字段
 SELECT '李明', 18, employee_id, last_name
 FORM employees;
@@ -119,7 +119,7 @@ FORM employees;
 ### 显示表的结构
 
 - 不同于 show db; show tables from db; 这里是显示某个具体表格的描述
-```
+```mysql
 describe employees;
 // or
 desc employees;
@@ -131,7 +131,7 @@ desc employees;
 1. 开启 结果集
 2. 从中过滤
 
-```
+```mysql
 SELECT * 
 FROM employees 
 WHERE department_id = 90;

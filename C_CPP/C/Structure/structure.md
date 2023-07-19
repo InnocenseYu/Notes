@@ -158,6 +158,14 @@ struct S s4 = { 0 };
 
 ```
 
+
+
+- 结构体的位段操作
+
+[内存分配规则](../BitField/bit_field.md/#内存分配规则)
+
+
+
 ### 结构变量成员操作
 
 - 结构体变量 sb. 成员 访问结构体内部变量
@@ -183,7 +191,7 @@ struct S s4 = { 0 };
 
 void print1(struct T tmp) // 结构体传参，tmp 是对传参变量数据的一份临时拷贝。
 {
-  printf("%s\n", tmp.ch);  // hehe
+    printf("%s\n", tmp.ch);  // hehe
 	printf("%s\n", tmp.s.arr); // hello world
 	printf("%lf\n", tmp.s.d); // 3.14
 	printf("%s", tmp.p); // hello bit，换行
@@ -217,10 +225,10 @@ void print2(struct T* tmp) // 结构体 传地址
   - 结构体 总大小为 除第一个结构体变量成员外（第一个结构体成员没有对齐数） 其他结构体变量成员的 最大对齐数 的整数倍
   - 如果嵌套了结构体的情况，嵌套的结构体对齐到自己内部的最大对齐数的整数倍处，结构体的整体大小就是所有最大对齐数（含嵌套结构体的对齐数）的整数倍
 - 修改默认对齐数
-  - #pragma 函数包裹的部分 默认对齐数 为自设置的
+  - #pragma pack(num)  当前源文件的默认对齐数可以自设置为 num，单位：字节
   
   ```C
-
+  
   #pragma pack(8)  //设置默认对齐数为8
   struct S1
   {
@@ -229,7 +237,7 @@ void print2(struct T* tmp) // 结构体 传地址
     char c2;
   };
   #pragma pack() //取消设置的默认对齐数，还原为默认
-
+  
   ```
 
 ![](../Structure/struct_memory.png)
@@ -405,3 +413,52 @@ int main()
             // 定于结构变量 
 }
 ```
+
+
+
+### 结构体成员类型分析
+
+- 通过结构体指针拿到的成员
+  - struct_name->struct_member
+  - struct_member 类型为原始类型，不会因结构体指针的原因而改变struct_member 为地址
+- 通过结构体拿到的成员
+
+
+
+### 结构体成员的偏移
+
+- 宏 模拟 offsetof 函数
+
+```c
+#define OFFSETOF(struct_name, struct_member) (int)&(((struct_name *)0)->struct_member)
+
+// 这里 (int) 强制转换的意思是将地址强制转换为 int 型，参与 "地址 - 0" 的运算，并不是对地址的强制类型转换(int *)
+```
+
+
+
+### 结构体指针与数组
+
+```c
+
+unsigned char a[4];
+struct tag
+{
+    unsigned char b;
+    unsigned char c1:1;
+    unsigned char c2:2;
+    unsigned char c3:3;
+}*ps;
+ps = (struct tag*)a;
+ps->c1 = 3; // 011, 因为c1 是一个bit，故只取用最小端的1，前面的 01 丢弃
+
+```
+
+
+
+![image-20220825162811773](image-20220825162811773.png)
+
+- 数组 a 指向的地址是4个连续 1byte内存unsigned char类型的起始位置
+- (struct tag\*)虽然改变了内存的读取方式，但是(struct tag*)a 地址的起始位置同数组 a 的起始位置一致
+- 差异是：在读取时是取用 unsigned char 类型 大小字节，还是 struct tag 类型的大小字节
+- 位域的大小端存储方式跟平台有关，这是使用小端存储分析

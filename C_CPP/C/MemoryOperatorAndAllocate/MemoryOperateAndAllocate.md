@@ -1,3 +1,68 @@
+## 内存操作
+
+### memcpy() 非内存重叠的内存拷贝
+
+```c
+void* my_memcpy(void* dst, const void* src, unsigned int num)
+{
+	assert(dst && src);
+
+	void* start = dst;
+	
+	while (num--) // 不能满足字符串的末尾 '\0' 的复制
+	{
+		*(char*)dst = *(char*)src; // 强制转换为字节操作
+		++(char*)dst;
+		++(char*)src;
+		// (char*)dst++ // 自加运算符 ++ 优先级高于 类型转换 (type)
+	}
+	
+	return start;
+
+}
+```
+
+### memmove() 重叠内存中的两个变量互相转换(移动)
+
+```c
+void* my_memmove(void* dst, const void* src, unsigned int num) // num 单位为byte, 需要移动字符串src的大小
+{
+	void* ret = dst;
+	while (num--) // num 已经修改
+	{
+		if (dst < src) // 比较大小跟类型没有关系
+		{
+			*(char*)dst = *(char*)src;
+
+			++(char*)dst;
+			++(char*)src;
+		}
+		else
+		{
+			// *((char*)dst + num -1) = *((char*)src+ num-1); // 因为 while(num--) 已经 num-1 了，所以这里的 1 不需要减了
+			*((char*)dst + num) = *((char*)src + num);  // (char*)src + num, 字符类型指针 + unsigned int, src++：每次移动一个地址(1byte) +1 这个 1 可以是int 也可以是unsigned int
+	
+		}
+	}
+	
+	return ret;
+
+}
+```
+
+
+
+### memset()
+
+```c
+void* my_memset(void* dst, int c, unsigned int num)
+{
+
+}
+```
+
+
+
 ## 动态内存管理与分配
 
 
@@ -115,6 +180,7 @@ int main()
     p++;
     free(p);// p 不再指向动态内存的起始位置, 会引起代码奔溃;
   }
+  ```
 
 - 对同一块动态内存的多次释放
 - 解决方法: 紧跟 free（ptr); p = NULL; 可以防止 ptr 指向空间的再次释放，因为 free(NULL) 什么也不会做
@@ -129,9 +195,9 @@ int main()
       *(p+i) = i;
     }
     free(p);
-
+  
     free(p); // 对 p 指针指向内存的多次释放，会引起代码奔溃;
-
+  
     p = NULL; // 紧跟 free 函数 可以防止 p 指向空间的再次释放，因为 free(NULL) 什么也不会做 
     
   }
@@ -146,19 +212,19 @@ int main()
 - C99 中，结构体类型中的 最后一个结构成员允许是未知大小的数组，这就叫做**柔性数组**成员
 
   ```C
-
+  
   // 示例1
   typedef struct st_type
   {
     int i;
-
+  
     // 以下是两种创建柔性数组的方式，有些编译器会报错无法编译，可以一种方式不行换成另一个
     int a[0];//柔性数组成员
-
+  
     int a[];//柔性数组成员
-
+  
   }type_a;
-
+  
   ```
 
   - 结构体中的柔性数组成员前面必须至少一个其他成员；
@@ -169,7 +235,7 @@ int main()
     //////////////////////////
     //// 方法1 //////////////
     ////////////////////////
-
+    
     //代码1
     type_a *sp = (type_a*)malloc(sizeof(type_a) + 10*sizeof(int));//  40+4 = 44 byte, sizeof(type_a) = 4byte大小是在栈区的空间，10*sizeof(int) = 40在堆区的动态内存空间，预期柔性数组 a 中存放 10个 int 类型元素
     
@@ -186,9 +252,9 @@ int main()
         sp->a[i] = i;
       }
     }
-
+    
     typa_a *sp_re = (type_a*)realloc(sp, 64); // 向 sp 指针指向的空间 重新开辟 64个byte, 扩充了 5 个int 大小的空间
-
+    
     if(sp_re != NULL)
     {
       sp = sp_re;
@@ -197,54 +263,57 @@ int main()
         sp-a[i] = i;
       }
     }
-
+    
     free(p);
     p = NULL;
 
 
-    /////////////////////////////
-    //// 使用指针 模拟柔性数组 //// 对比 malloc 使用次数 和 内存的连惯性，建议使用柔性数组
-    /////////////////////////////
 
-    struct st_type
-    {
-      int i; // 4
-      int *arr; // 4
-    };  // sizeof(struct st_type) == 8byte
+### 指针模拟柔性数组 
+
+- 指针模拟柔性数组，对比 malloc 使用次数 和 内存的连惯性，建议直接使用柔性数组
+
+```C
+
+struct st_type
+{
+  int i; // 4
+  int *arr; // 4
+};  // sizeof(struct st_type) == 8byte
  
-    //代码1
-    struct st_type *sp = (struct st_type*)malloc(sizeof(struct st_type));
-    sp->arr = malloc(10*sizeof(int)); // 栈区开辟的 sp->arr 指针存放 malloc 在堆区开辟的动态内存空间的地址
-                                      // 因为 sp->arr 存放的是地址，所以开辟的动态内存返回地址赋值给结构体成员指针 sp->arr 不会对sizeof(struct st_type) 的大小产生影响
-    
-    if(sp->arr ！= NULL)
-    {
-      // 业务处理
-      sp->i = 10;
-      for(int i=0; i<10; i++)
-      {
-        sp->arr[i] = i;
-        // sp->(*(arr+i)) = i;
-      }
-    }
+//代码1
+struct st_type *sp = (struct st_type*)malloc(sizeof(struct st_type));
+sp->arr = malloc(10*sizeof(int)); // 栈区开辟的 sp->arr 指针存放 malloc 在堆区开辟的动态内存空间的地址
+                                  // 因为 sp->arr 存放的是地址，所以开辟的动态内存返回地址赋值给结构体成员指针 sp->arr 不会对sizeof(struct st_type) 的大小产生影响
 
-    typa_a *sp->arr1 = (type_a*)realloc(sp->arr, 60); // 向 sp-arr 指针指向的空间 重新开辟 60个byte, arr 由 10个 int 扩充到 15 个 int 大小的空间
+if(sp->arr ！= NULL)
+{
+  // 业务处理
+  sp->i = 10;
+  for(int i=0; i<10; i++)
+  {
+    sp->arr[i] = i;
+    // sp->(*(arr+i)) = i;
+  }
+}
 
-    if(sp->arr1 != NULL)
-    {
-      // 业务补充
-      sp->arr = sp->arr1;
+typa_a *sp->arr1 = (type_a*)realloc(sp->arr, 60); // 向 sp-arr 指针指向的空间 重新开辟 60个byte, arr 由 10个 int 扩充到 15 个 int 大小的空间
 
-      for(int i=10; i<15; i++)
-      {
-        sp->arr[i] = i;
-      }
-    }
+if(sp->arr1 != NULL)
+{
+  // 业务补充
+  sp->arr = sp->arr1;
 
-    free(sp->arr);
-    sp->arr = NULL;
+  for(int i=10; i<15; i++)
+  {
+    sp->arr[i] = i;
+  }
+}
 
-    free(sp);
-    sp = NULL;
+free(sp->arr);
+sp->arr = NULL;
 
-    ```
+free(sp);
+sp = NULL;
+
+```

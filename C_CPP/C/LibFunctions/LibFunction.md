@@ -1,3 +1,7 @@
+<span id="TOC">目录</span>
+
+[toc]
+
 ## 库函数
 
 ### return
@@ -320,7 +324,7 @@ printf("Error opening file unexist.ent: %s\n", strerror(errno)); //errno: Last e
   - ptr1 > ptr2，1
   - ptr1 = ptr2，0
 
-### memset
+### memset 
 - 内存设置
 - void* memset(void* dst, int c, unsigned int num)
   - dst 要设置的区域
@@ -379,9 +383,13 @@ assert(expression); // 函数调用
 
 ```
 - assert 宏的原型定义在 assert.h 中
+
 - assert 的作用是现计算表达式 expression ，如果其值为假（即为 0），那么它先向 stderr 打印一条出错信息，然后通过调用 abort 来终止程序运行
+
 - assert 只有在 Debug 版本中才有效，如果编译为 Release 版本则被忽略
+
 - 缺点：频繁的调用会极大的影响程序的性能，增加额外的开销
+
 - 所以调试结束后，可以通过在包含任意一个 #include 的语句之前插入 #define NDEBUG 来禁用 assert 调用
   ```C
   #include <stdio.h>
@@ -389,7 +397,31 @@ assert(expression); // 函数调用
   #define NDEBUG 
   #include "stm32f4.h"
   ```
+  
 - 使用场景：
   - 函数开始处检验传入参数的合法性
   - 每次调用 assert函数 一般只检验一个条件，因为同时检验多个条件时，如果断言失败，无法直观的判断是哪个条件失败
-  - 
+
+
+
+### offsetof(type,member)
+
+- 位于 stddef.h
+- 宏 模拟 该函数
+
+```c
+
+// 宏模拟
+#define OFFSETOF(struct_name, struct_member) (int)&(((struct_name *)0)->struct_member)
+
+// 这里 (int) 强制转换的意思是将地址强制转换为 int 型，参与 "地址 - 0" 的运算，并不是对地址的强制类型转换(int *)
+```
+
+
+
+[返回目录](#TOC)
+
+
+
+
+
